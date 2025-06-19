@@ -1,7 +1,7 @@
 import { isStepOneDisabled, isStepTwoDisabled, isStepThreeDisabled } from "../utils/registerFormWatchUtils"
 import { type userType } from "../types/userTypes"
 
-export const useRegisterStepValidation = (watchedValues: Partial<userType>) => {
+export const useRegisterStepValidation = (watchedValues: userType) => {
   const isDisabledStepOne = isStepOneDisabled({
     username: watchedValues.username ?? "",
     password: watchedValues.password ?? "",
