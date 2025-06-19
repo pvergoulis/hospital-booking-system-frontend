@@ -7,13 +7,11 @@ import { userSchema, type userType } from "../types/userTypes";
 import { usePasswordToggle } from "../hooks/usePasswordToggle";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { InputAdornment, IconButton } from "@mui/material";
-import {
-  isStepOneDisabled,
-  isStepTwoDisabled,
-  isStepThreeDisabled,
-} from "../utils/registerFormWatchUtils";
 import { registerUser } from "../services/userApi";
 import { useNavigate } from "react-router";
+import { useRegisterStepValidation } from "../hooks/useRegisterStepValidation";
+import { useStepper } from "../hooks/useStepper";
+
 
 const RegisterPage = () => {
   useEffect(() => {
@@ -31,44 +29,21 @@ const RegisterPage = () => {
   });
 
   const watchedValues = watch();
+  const { 
+    isDisabledStepOne, 
+    isDisabledStepTwo, 
+    isDisabledStepThree 
+  } = useRegisterStepValidation(watchedValues);
 
-  const isDisabledStepOne = isStepOneDisabled({
-    username: watchedValues.username ?? "",
-    password: watchedValues.password ?? "",
-    confirmPassword: watchedValues.confirmPassword ?? "",
-    email: watchedValues.email ?? "",
-  });
 
-  const isDisabledStepTwo = isStepTwoDisabled({
-    firstname: watchedValues.firstname ?? "",
-    lastname: watchedValues.lastname ?? "",
-    phone: watchedValues.phone ?? "",
-    age: watchedValues.age ?? 0,
-  });
-
-  const isDisabledStepThree = isStepThreeDisabled({
-    mothersName: watchedValues.mothersName ?? "",
-    fathersName: watchedValues.fathersName ?? "",
-    amka: watchedValues.amka ?? "",
-    vat: watchedValues.vat ?? "",
-  });
-
-  const navigate = useNavigate();
-
-  const [step, setStep] = useState(0);
-  const nextStep = () => {
-    if (step < 2) setStep((prev) => prev + 1);
-  };
-
-  const prevStep = () => {
-    if (step > 0) setStep((prev) => prev - 1);
-  };
-
+  const { step, nextStep, prevStep } = useStepper(2);
   const { showPassword, togglePassword } = usePasswordToggle();
-
 
   const [registerMessage, setRegisterMessage] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+
+
+  const navigate = useNavigate()
 
   const onSubmit = async (data: userType) => {
     console.log("Submitted data", data);
@@ -87,7 +62,6 @@ const RegisterPage = () => {
     }
   };
 
-  
   return (
     <>
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
@@ -117,6 +91,7 @@ const RegisterPage = () => {
           Register
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
+          
           {/* step 1 */}
           {step === 0 && (
             <div className="space-y-4">
