@@ -4,11 +4,11 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/api/doctors"
 
 
-export const getFirstSixDoctors = async (): Promise<doctorTypeCard[]> => {
+export const getFirstEightDoctors = async (): Promise<doctorTypeCard[]> => {
     const token = localStorage.getItem("token");
-    
+
     const res = await axios.get<{ status: boolean; data: doctorTypeCard[] }>(
-    `${API_URL}/sixDoctors`, {
+    `${API_URL}/eightDoctors`, {
          headers: {
         Authorization: `Bearer ${token}`,
     },
