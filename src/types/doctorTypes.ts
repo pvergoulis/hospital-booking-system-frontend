@@ -30,6 +30,7 @@ export const doctorSchema = z.object({
 export type doctorType = z.infer<typeof doctorSchema>
 
 
+
 export type doctorTypeCard = {
   _id: string;
   firstname: string;
