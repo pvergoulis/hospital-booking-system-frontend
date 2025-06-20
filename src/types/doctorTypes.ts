@@ -7,8 +7,14 @@ export const doctorSchema = z.object({
     image : z.string().optional(),
     experience : z.string().optional(),
     cv : z.string().optional(),
-    specialization: z.string().nonempty("Specialization is required"),
-    clinic: z.string().nonempty("Clinic is required"),
+    specialization: z.object({
+     _id: z.string(),
+     name: z.string(),
+    }),
+    clinic: z.object({
+      _id: z.string(),
+      name: z.string(),
+    }),
     amka : z.string().length(11,"AMKA must be exactly 11 characters").nonempty(),
     availableHours: z
     .array(
@@ -22,3 +28,13 @@ export const doctorSchema = z.object({
 })
 
 export type doctorType = z.infer<typeof doctorSchema>
+
+
+export type doctorTypeCard = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  image?: string;
+  specialization: { _id: string; name: string };
+  clinic: { _id: string; name: string };
+};
