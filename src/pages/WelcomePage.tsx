@@ -42,7 +42,7 @@ const WelcomePage = () => {
       </div>
 
       <div>
-        <DoctorCard image="img9.jpg" firstname="Pavlos" lastname="Vergoulis" specialization="Ortho" clinic="ortho"></DoctorCard>
+        <DoctorCard image="img9.jpg" firstname="Pavlos" lastname="Vergoulis" specialization="Ortho" clinic="Orthope"></DoctorCard>
       </div>
     </>
   );
