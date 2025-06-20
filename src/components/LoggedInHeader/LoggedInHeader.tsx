@@ -1,9 +1,8 @@
-
-import { Menu, X ,LogOut} from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { NavLink } from "react-router";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
-import {type DecodedToken } from "../../types/jwtTypes"
+import { type DecodedToken } from "../../types/jwtTypes";
 const LoggedInHeader = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,21 +10,14 @@ const LoggedInHeader = () => {
     setIsOpen(!isOpen);
   };
 
-   const [username, setUsername] = useState<string | null>(null);
-    const [role , setRole] = useState<string | null>(null)
-      
-     useEffect(() => {
-      const storedUsername = localStorage.getItem("username");
-      const token = localStorage.getItem("token")
-      
-      if (storedUsername) {
-        setUsername(storedUsername);
-      }
-  
-      const decoded = jwtDecode<DecodedToken>(token!)
-      setRole(decoded.role)
-    }, []);
+  const [role, setRole] = useState<string | null>(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    const decoded = jwtDecode<DecodedToken>(token!);
+    setRole(decoded.role);
+  }, []);
 
   return (
     <>
@@ -44,13 +36,14 @@ const LoggedInHeader = () => {
           } absolute top-24 left-0 w-full bg-blue-500 p-4 md:static md:block md:w-auto md:p-0`}
         >
           <ul className="md:flex gap-16 text-white text-xl">
-            {role?.includes("ADMIN") && 
-            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/admin" onClick={handleToggle}>
-                Admin
-              </NavLink>
-            </li>}
-            
+            {role?.includes("ADMIN") && (
+              <li className="mt-2 mb-2 md:mt-0 md:mb-0">
+                <NavLink to="/admin" onClick={handleToggle}>
+                  Admin
+                </NavLink>
+              </li>
+            )}
+
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink to="/doctors" onClick={handleToggle}>
                 Doctors
@@ -61,14 +54,14 @@ const LoggedInHeader = () => {
                 Clinics
               </NavLink>
             </li>
-             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
+            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink to="/myAppointments" onClick={handleToggle}>
                 My Appointments
               </NavLink>
             </li>
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink to="/login" onClick={handleToggle}>
-                 <LogOut />
+                <LogOut />
               </NavLink>
             </li>
           </ul>
