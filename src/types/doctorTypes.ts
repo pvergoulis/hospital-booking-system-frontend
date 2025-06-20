@@ -19,7 +19,6 @@ export const doctorSchema = z.object({
       })
     )
     .optional(),
-
 })
 
 export type doctorType = z.infer<typeof doctorSchema>
