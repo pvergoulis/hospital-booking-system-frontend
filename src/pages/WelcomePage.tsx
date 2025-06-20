@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import { useState, useEffect } from "react";
 import DoctorCard from "../components/DoctorCard/DoctorCard";
-import { getFirstSixDoctors } from "../services/doctorApi";
+import { getFirstEightDoctors } from "../services/doctorApi";
 import {type doctorTypeCard } from "../types/doctorTypes";
 
 const WelcomePage = () => {
@@ -17,7 +17,7 @@ const WelcomePage = () => {
 
     const fetchDoctors = async () => {
       try {
-        const data = await getFirstSixDoctors();
+        const data = await getFirstEightDoctors();
         setDoctors(data);
       } catch (err) {
         console.error("Failed to fetch doctors", err);
