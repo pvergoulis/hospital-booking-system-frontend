@@ -9,6 +9,7 @@ const DashboardLayout = () => {
 
       <div className="min-h-[55vh] pt-16">
         <Outlet />
+        
       </div>
 
       <Footer />
