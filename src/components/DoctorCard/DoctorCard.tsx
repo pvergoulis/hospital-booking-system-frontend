@@ -1,6 +1,6 @@
 import { type doctorType } from "../../types/doctorTypes"
 
-type doctorTypeCard = Pick<doctorType, "firstname" | "lastname" | "image" | "specialization" |  "clinic">;
+export type doctorTypeCard = Pick<doctorType, "firstname" | "lastname" | "image" | "specialization" |  "clinic">;
 
 
 const DoctorCard = ({firstname, lastname , image, specialization, clinic}: doctorTypeCard) =>{
