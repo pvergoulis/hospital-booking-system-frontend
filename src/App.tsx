@@ -4,6 +4,8 @@ import BeforeLoginLayout from "./components/BeforeLoginLayout/BeforeLoginLayout"
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import WelcomePage from "./pages/WelcomePage";
+import DashboardLayout from "./components/DashboardLayout/DashboardLayout";
 function App() {
  
 
@@ -16,6 +18,11 @@ function App() {
             <Route path="/" element={<HomePage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
             <Route path="/register" element={<RegisterPage/>}/>
+          </Route>
+
+
+          <Route element={<DashboardLayout/>}>
+            <Route path="/welcome" element={<WelcomePage/>}/>
           </Route>
 
 

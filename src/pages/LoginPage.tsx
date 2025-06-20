@@ -9,11 +9,14 @@ import {
 } from "@mui/material";
 import {  Visibility, VisibilityOff } from "@mui/icons-material"
 import { InputAdornment, IconButton } from "@mui/material";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { userLoginSchema, type userLoginType } from "../types/userTypes";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import { usePasswordToggle } from "../hooks/usePasswordToggle";
+import { loginUser } from "../services/authApi";
+import {jwtDecode} from "jwt-decode"
+import { type DecodedToken }from "../types/jwtTypes";
 
 const initialValues = {
   username : "",
@@ -21,12 +24,13 @@ const initialValues = {
 }
 
 
+
 const LoginPage = () => {
   useEffect(() => {
     document.title = "Parvathy Hospital | Login Page";
   }, []);
 
-
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -47,9 +51,38 @@ const LoginPage = () => {
 const { showPassword, togglePassword } = usePasswordToggle();
 
 
-  const onSubmit =(data : userLoginType)=>{
-    console.log("data", data);
-    reset()
+  const onSubmit = async (data : userLoginType)=>{
+    try {
+      // const token = await loginUser(data);
+      // localStorage.setItem("token", token);
+      
+      // const decoded = jwtDecode<DecodedToken>(token);
+      // console.log("Decoded user:", decoded);
+      // localStorage.setItem("username", data.username);
+      // console.log("Saved username:", localStorage.getItem("username"));
+      // navigate("/welcome")
+      // reset();
+
+      const token = await loginUser(data);
+    localStorage.setItem("token", token);
+
+    const decoded = jwtDecode<DecodedToken>(token);
+    console.log("Decoded user:", decoded);
+
+    // Αν το decoded token έχει πεδίο username, το αποθηκεύουμε, αλλιώς το username από το data
+    if (decoded.username) {
+      localStorage.setItem("username", decoded.username);
+      console.log("username saved to localStorage (decoded):", decoded.username);
+    } else {
+      localStorage.setItem("username", data.username);
+      console.log("username saved to localStorage (from data):", data.username);
+    }
+
+    navigate("/welcome");
+    reset();
+    } catch (error) {
+      console.error("Login failed", error);
+    }
   }
 
   return (
