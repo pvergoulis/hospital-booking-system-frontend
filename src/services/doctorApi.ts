@@ -8,7 +8,7 @@ export const getFirstEightDoctors = async (): Promise<doctorTypeCard[]> => {
     const token = localStorage.getItem("token");
 
     const res = await axios.get<{ status: boolean; data: doctorTypeCard[] }>(
-    `${API_URL}/eightDoctors`, {
+    `${API_URL}/EightDoctors`, {
          headers: {
         Authorization: `Bearer ${token}`,
     },
