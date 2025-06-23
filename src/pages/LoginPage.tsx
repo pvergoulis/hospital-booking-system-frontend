@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import {
   Box,
   Button,
@@ -7,95 +7,85 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {  Visibility, VisibilityOff } from "@mui/icons-material"
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { InputAdornment, IconButton } from "@mui/material";
 import { Link, useNavigate } from "react-router";
 import { userLoginSchema, type userLoginType } from "../types/userTypes";
-import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { usePasswordToggle } from "../hooks/usePasswordToggle";
 import { loginUser } from "../services/authApi";
-import {jwtDecode} from "jwt-decode"
-import { type DecodedToken }from "../types/jwtTypes";
+import { jwtDecode } from "jwt-decode";
+import { type DecodedToken } from "../types/jwtTypes";
 
 const initialValues = {
-  username : "",
-  password : ""
-}
-
-
+  username: "",
+  password: "",
+};
 
 const LoginPage = () => {
   useEffect(() => {
     document.title = "Parvathy Hospital | Login Page";
   }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     reset,
     watch,
   } = useForm<userLoginType>({
     resolver: zodResolver(userLoginSchema),
-    defaultValues: initialValues
-  })
+    defaultValues: initialValues,
+  });
 
-  const username = watch("username")
-  const password = watch("password")
-  const isDisabled = username.trim() === "" || username.length < 3 || password.trim() === ""
+  const username = watch("username");
+  const password = watch("password");
+  const isDisabled =
+    username.trim() === "" || username.length < 3 || password.trim() === "";
 
+  const { showPassword, togglePassword } = usePasswordToggle();
 
-
-const { showPassword, togglePassword } = usePasswordToggle();
-
-
-  const onSubmit = async (data : userLoginType)=>{
+  const onSubmit = async (data: userLoginType) => {
     try {
-      // const token = await loginUser(data);
-      // localStorage.setItem("token", token);
-      
-      // const decoded = jwtDecode<DecodedToken>(token);
-      // console.log("Decoded user:", decoded);
-      // localStorage.setItem("username", data.username);
-      // console.log("Saved username:", localStorage.getItem("username"));
-      // navigate("/welcome")
-      // reset();
-
       const token = await loginUser(data);
-    localStorage.setItem("token", token);
+      localStorage.setItem("token", token);
 
-    const decoded = jwtDecode<DecodedToken>(token);
-    console.log("Decoded user:", decoded);
+      const decoded = jwtDecode<DecodedToken>(token);
+      console.log("Decoded user:", decoded);
 
-    // Αν το decoded token έχει πεδίο username, το αποθηκεύουμε, αλλιώς το username από το data
-    if (decoded.username) {
-      localStorage.setItem("username", decoded.username);
-      console.log("username saved to localStorage (decoded):", decoded.username);
-    } else {
-      localStorage.setItem("username", data.username);
-      console.log("username saved to localStorage (from data):", data.username);
-    }
+      if (decoded.username) {
+        localStorage.setItem("username", decoded.username);
+        console.log(
+          "username saved to localStorage (decoded):",
+          decoded.username
+        );
+      } else {
+        localStorage.setItem("username", data.username);
+        console.log(
+          "username saved to localStorage (from data):",
+          data.username
+        );
+      }
 
-    navigate("/welcome");
-    reset();
+      navigate("/welcome");
+      reset();
     } catch (error) {
       console.error("Login failed", error);
     }
-  }
+  };
 
   return (
     <>
-    
       <Container
         maxWidth="sm"
         sx={{
-          mt:15,
+          mt: 15,
           border: "2px solid #2461f0",
           borderRadius: "10px",
           p: 4,
-          mb: 6
+          mb: 6,
         }}
       >
         <Typography
@@ -108,12 +98,17 @@ const { showPassword, togglePassword } = usePasswordToggle();
             fontWeight: "semi-bold",
             fontFamily: "roboto",
             mb: "2rem",
-            offset: "3px"
+            offset: "3px",
           }}
         >
           Login
         </Typography>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             placeholder="Enter Username"
             fullWidth
@@ -122,7 +117,6 @@ const { showPassword, togglePassword } = usePasswordToggle();
             label="Username"
             autoFocus
             {...register("username")}
-            
             sx={{ mb: 2 }}
             error={!!errors.username}
             helperText={errors.username?.message}
@@ -145,7 +139,6 @@ const { showPassword, togglePassword } = usePasswordToggle();
             {...register("password")}
             error={!!errors.password}
             helperText={errors.password?.message}
-            
             FormHelperTextProps={{
               sx: {
                 color: "#d32f2f",
@@ -155,10 +148,7 @@ const { showPassword, togglePassword } = usePasswordToggle();
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
-                    onClick={togglePassword}
-                    edge="end"
-                  >
+                  <IconButton onClick={togglePassword} edge="end">
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
@@ -187,7 +177,6 @@ const { showPassword, togglePassword } = usePasswordToggle();
           </Typography>
         </Grid>
       </Container>
-    
     </>
   );
 };

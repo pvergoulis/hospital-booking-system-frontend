@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
 import DashboardLayout from "./components/DashboardLayout/DashboardLayout";
 import DoctorPage from "./pages/DoctorsPage";
+import DoctorDetailsPage from "./pages/DoctorDetailsPage"
 function App() {
  
 
@@ -25,6 +26,7 @@ function App() {
           <Route element={<DashboardLayout/>}>
             <Route path="/welcome" element={<WelcomePage/>}/>
             <Route path="/doctors" element={<DoctorPage/>}/>
+            <Route path="/doctors/:lastname" element={<DoctorDetailsPage />} />
           </Route>
 
 

@@ -2,6 +2,7 @@ import { z } from "zod"
 
 
 export const doctorSchema = z.object({
+    _id: z.string(),
     firstname : z.string().nonempty("Firstname is required"),
     lastname : z.string().nonempty("Lastname is required"),
     image : z.string().optional(),
