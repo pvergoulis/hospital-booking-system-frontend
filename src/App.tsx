@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
 import DashboardLayout from "./components/DashboardLayout/DashboardLayout";
+import DoctorPage from "./pages/DoctorsPage";
 function App() {
  
 
@@ -23,6 +24,7 @@ function App() {
 
           <Route element={<DashboardLayout/>}>
             <Route path="/welcome" element={<WelcomePage/>}/>
+            <Route path="/doctors" element={<DoctorPage/>}/>
           </Route>
 
 
