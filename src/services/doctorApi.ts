@@ -57,7 +57,6 @@ export const getDoctorByLastname = async (lastname: string): Promise<doctorType>
     }
     return res.data.data;
   } catch (error: any) {
-    // Λογικά εδώ θα μπει και το axios error π.χ. 404, 401 κτλ
     if (error.response) {
       
       throw new Error(error.response.data.message || `Error: ${error.response.status}`);
