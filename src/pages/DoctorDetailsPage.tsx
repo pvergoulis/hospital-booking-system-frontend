@@ -100,7 +100,7 @@ const DoctorDetailsPage = () => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           className="border rounded px-2 py-1 w-full"
-          min={new Date().toISOString().split("T")[0]} // Απαγορευουμε επιλογη παλαιοτερης ημερομηνιας
+          min={new Date().toISOString().split("T")[0]} //  Απαγορευουμε επιλογη παλαιοτερης ημερομηνιας
         />
 
         <select
