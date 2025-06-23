@@ -19,4 +19,5 @@ export type AppointmentType = {
     };
     image?: string;
   };
+  
 };
