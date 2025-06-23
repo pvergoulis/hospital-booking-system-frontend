@@ -45,17 +45,18 @@ const LoggedInHeader = () => {
                 </NavLink>
               </li>
             )}
+            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
+              <NavLink to="/about" onClick={handleToggle}>
+                About
+              </NavLink>
+            </li>
 
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink to="/doctors" onClick={handleToggle}>
                 Doctors
               </NavLink>
             </li>
-            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/clinics" onClick={handleToggle}>
-                Clinics
-              </NavLink>
-            </li>
+            
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink to="/myAppointments" onClick={handleToggle}>
                 My Appointments
