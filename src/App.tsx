@@ -8,6 +8,7 @@ import WelcomePage from "./pages/WelcomePage";
 import DashboardLayout from "./components/DashboardLayout/DashboardLayout";
 import DoctorPage from "./pages/DoctorsPage";
 import DoctorDetailsPage from "./pages/DoctorDetailsPage"
+import MyAppointmentsPage from "./pages/MyAppointmentsPage";
 function App() {
  
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/welcome" element={<WelcomePage/>}/>
             <Route path="/doctors" element={<DoctorPage/>}/>
             <Route path="/doctors/:lastname" element={<DoctorDetailsPage />} />
+            <Route path="myAppointments" element={<MyAppointmentsPage/>}/>
           </Route>
 
 

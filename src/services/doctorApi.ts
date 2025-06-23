@@ -37,20 +37,31 @@ export const getAllDoctors = async () : Promise<doctorTypeCard[]> =>{
 }
 
 
-export const getDoctorByLastname = async (
-  lastname: string
-): Promise<doctorType> => {
+export const getDoctorByLastname = async (lastname: string): Promise<doctorType> => {
   const token = localStorage.getItem("token");
 
-  const res = await axios.get<{ status: boolean; data: doctorType}>(
-    `${API_URL}/lastname/${lastname}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  try {
+    const res = await axios.get<{ status: boolean; data: doctorType; message?: string }>(
+      `${API_URL}/lastname/${lastname}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-  if (!res.data.status) throw new Error("Failed to fetch doctor");
-  return res.data.data;
+    if (!res.data.status) {
+    
+      const msg = res.data.message || "Failed to fetch doctor";
+      throw new Error(msg);
+    }
+    return res.data.data;
+  } catch (error: any) {
+    // Λογικά εδώ θα μπει και το axios error π.χ. 404, 401 κτλ
+    if (error.response) {
+      
+      throw new Error(error.response.data.message || `Error: ${error.response.status}`);
+    }
+    throw error;
+  }
 };
