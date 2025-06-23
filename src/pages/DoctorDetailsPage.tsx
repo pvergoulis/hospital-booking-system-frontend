@@ -38,7 +38,7 @@ const DoctorDetailsPage = () => {
         timeSlot: appt.timeSlot,
       }));
       setBookedSlots(slots);
-
+      document.title = `Parvathy Hospital | ${lastname} Page`
     } catch (err) {
       console.error("Error fetching doctor or appointments:", err);
       setError(err instanceof Error ? err.message : "Unknown error");

@@ -9,6 +9,7 @@ import DashboardLayout from "./components/DashboardLayout/DashboardLayout";
 import DoctorPage from "./pages/DoctorsPage";
 import DoctorDetailsPage from "./pages/DoctorDetailsPage"
 import MyAppointmentsPage from "./pages/MyAppointmentsPage";
+import AboutPage from "./pages/AboutPage";
 function App() {
  
 
@@ -28,7 +29,8 @@ function App() {
             <Route path="/welcome" element={<WelcomePage/>}/>
             <Route path="/doctors" element={<DoctorPage/>}/>
             <Route path="/doctors/:lastname" element={<DoctorDetailsPage />} />
-            <Route path="myAppointments" element={<MyAppointmentsPage/>}/>
+            <Route path="/myAppointments" element={<MyAppointmentsPage/>}/>
+            <Route path="/about" element={<AboutPage/>}/>
           </Route>
 
 
