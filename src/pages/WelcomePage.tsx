@@ -51,11 +51,11 @@ const WelcomePage = () => {
             </NavLink>
           </p>
         </div>
-        <div className="flex-1/3 bg-[#41B6E6] pt-6 pb-6 ps-6 ">
+        <div className="flex-1/3 bg-[#41B6E6] p-6">
           <img
             src="img9.jpg"
             alt=""
-            className="w-150 xl:relative  xl:right-40"
+            className="max-w-full h-auto rounded-lg shadow-lg "
           />
         </div>
       </div>

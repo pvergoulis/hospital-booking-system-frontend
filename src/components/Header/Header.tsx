@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { NavLink } from "react-router";
@@ -14,17 +13,11 @@ const Header = () => {
     <>
       <nav className="flex bg-blue-500 h-24 items-center justify-between p-4 w-full fixed ">
         <div>
-          <img
-            src="/logo4.png"
-            alt="logo"
-            className="w-55 text-white"
-          />
+          <img src="/logo4.png" alt="logo" className="w-55 text-white" />
         </div>
 
         <div className="md:hidden">
-          <button onClick={handleToggle}>
-            {isOpen ? <X /> : <Menu />}
-          </button>
+          <button onClick={handleToggle}>{isOpen ? <X /> : <Menu />}</button>
         </div>
 
         <div
@@ -34,17 +27,41 @@ const Header = () => {
         >
           <ul className="md:flex gap-16 text-white text-xl">
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/" onClick={handleToggle}>
+              <NavLink
+                to="/"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
                 Home
               </NavLink>
             </li>
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/register" onClick={handleToggle}>
+              <NavLink
+                to="/register"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
                 Register
               </NavLink>
             </li>
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/login" onClick={handleToggle}>
+              <NavLink
+                to="/login"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
                 Login
               </NavLink>
             </li>

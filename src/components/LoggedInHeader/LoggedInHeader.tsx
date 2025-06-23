@@ -40,25 +40,57 @@ const LoggedInHeader = () => {
           <ul className="md:flex gap-16 text-white text-xl">
             {role?.includes("ADMIN") && (
               <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-                <NavLink to="/admin" onClick={handleToggle}>
+                <NavLink
+                  to="/admin"
+                  onClick={handleToggle}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "underline underline-offset-4 text-white font-bold"
+                      : "text-white"
+                  }
+                >
                   Admin
                 </NavLink>
               </li>
             )}
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/about" onClick={handleToggle}>
+              <NavLink
+                to="/about"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
                 About
               </NavLink>
             </li>
 
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/doctors" onClick={handleToggle}>
+              <NavLink
+                to="/doctors"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
                 Doctors
               </NavLink>
             </li>
-            
+
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/myAppointments" onClick={handleToggle}>
+              <NavLink
+                to="/myAppointments"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
                 My Appointments
               </NavLink>
             </li>
