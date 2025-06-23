@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { type doctorType } from "../types/doctorTypes";
 import axios from "axios";
 import { bookAppointment } from "../services/appointmentApi";
-import {  Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 const DoctorDetailsPage = () => {
   const { lastname } = useParams();
@@ -12,8 +12,7 @@ const DoctorDetailsPage = () => {
   const [timeSlot, setTimeSlot] = useState("");
   const [success, setSuccess] = useState("");
 
-
-    const handleBooking = async () => {
+  const handleBooking = async () => {
     if (!doctor || !date || !timeSlot) return;
 
     try {
@@ -52,7 +51,7 @@ const DoctorDetailsPage = () => {
 
   return (
     <>
-      <div className= "mt-10 border-2 border-cyan-500 rounded-2xl m-4 p-4 grid gap-6 lg:grid-cols-3 w-full max-w-7xl mx-auto md:flex md:items-center">
+      <div className="mt-10 border-2 border-cyan-500 rounded-2xl m-4 p-4 grid gap-6 lg:grid-cols-3 w-full max-w-7xl mx-auto md:flex md:items-center">
         <div className=" flex items-center">
           <img
             src={doctor.image}
@@ -60,7 +59,6 @@ const DoctorDetailsPage = () => {
             className="w-100 h-100"
           />
         </div>
-
 
         <div className=" p-4 space-y-6 w-80">
           <p className="text-sky-600 text-center font-bold ">
@@ -72,49 +70,47 @@ const DoctorDetailsPage = () => {
           <p className="text-center text-xl text-sky-500">
             {doctor.specialization.name}
           </p>
-          <p className="mt-8 text-gray-500 break-words text-wrap max-w-full ">{doctor.cv}</p>
+          <p className="mt-8 text-gray-500 break-words text-wrap max-w-full ">
+            {doctor.cv}
+          </p>
         </div>
-
 
         <div className=" p-4 space-y-6 w-80">
           <p className="text-sky-600 text-center font-bold ">
             Book an Appointment
           </p>
           <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="border rounded px-2 py-1 w-full"
-        />
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="border rounded px-2 py-1 w-full"
+          />
 
-        <select
-          value={timeSlot}
-          onChange={(e) => setTimeSlot(e.target.value)}
-          className="border rounded px-2 py-1 w-full"
-        >
-          <option value="">Select Time Slot</option>
-          <option value="09:00">09:00</option>
-          <option value="10:00">10:00</option>
-          <option value="11:00">11:00</option>
-          <option value="12:00">12:00</option>
-          <option value="15:00">15:00</option>
-          <option value="16:00">16:00</option>
-        </select>
+          <select
+            value={timeSlot}
+            onChange={(e) => setTimeSlot(e.target.value)}
+            className="border rounded px-2 py-1 w-full"
+          >
+            <option value="">Select Time Slot</option>
+            <option value="09:00">09:00</option>
+            <option value="10:00">10:00</option>
+            <option value="11:00">11:00</option>
+            <option value="12:00">12:00</option>
+            <option value="15:00">15:00</option>
+            <option value="16:00">16:00</option>
+          </select>
 
-        <button
-          onClick={handleBooking}
-          className="bg-cyan-500 text-white px-4 py-2 rounded w-full"
-        >
-          Confirm Appointment
-        </button>
+          <button
+            onClick={handleBooking}
+            className="bg-cyan-500 text-white px-4 py-2 rounded w-full"
+          >
+            Confirm Appointment
+          </button>
 
-        {success && <p className="text-green-600 text-center">{success}</p>}
-         
-          
+          {success && <p className="text-green-600 text-center">{success}</p>}
         </div>
       </div>
     </>
-  
   );
 };
 
