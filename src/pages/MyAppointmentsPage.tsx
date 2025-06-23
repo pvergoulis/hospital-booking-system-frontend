@@ -12,8 +12,16 @@ import {
 import {
   getUserAppointments,
   cancelAppointment,
+  updatePastPendingAppointments
 } from "../services/appointmentApi";
 import { type AppointmentType } from "../types/appointmentTypes";
+
+const parseAppointmentDateTime = (dateStr: string, timeStr: string) => {
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  const date = new Date(dateStr);
+  date.setHours(hours, minutes, 0, 0);
+  return date;
+};
 
 const MyAppointmentsPage = () => {
   const [appointments, setAppointments] = useState<AppointmentType[]>([]);
@@ -25,20 +33,44 @@ const MyAppointmentsPage = () => {
     null
   );
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const data = await getUserAppointments();
-        setAppointments(data);
-      } catch (error) {
-        console.error("Failed to fetch appointments", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const updateStatuses = (appointments: AppointmentType[]) => {
+    const now = new Date();
+    console.log("Now:", now.toISOString());
 
-    fetchAppointments();
-  }, []);
+    return appointments.map((appt) => {
+      if (appt.status === "PENDING") {
+        const apptDateTime = parseAppointmentDateTime(appt.date, appt.timeSlot);
+        console.log(`Appointment ${appt._id} datetime:`, apptDateTime.toISOString());
+
+        if (apptDateTime <= now) {
+          console.log(`Updating appointment ${appt._id} status from PENDING to CONFIRMED`);
+          return { ...appt, status: "CONFIRMED" };
+        }
+      }
+      return appt;
+    });
+  };
+
+  useEffect(() => {
+  const fetchAndUpdateAppointments = async () => {
+    try {
+      await updatePastPendingAppointments();
+
+      const data = await getUserAppointments();
+
+      const updatedAppointments = updateStatuses(data);
+      setAppointments(updatedAppointments);
+      setError(null);
+    } catch (error) {
+      console.error("Failed to fetch appointments or update statuses", error);
+      setError("Failed to fetch appointments or update statuses");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchAndUpdateAppointments();
+}, []);
 
   const openCancelDialog = (id: string) => {
     setAppointmentToCancel(id);
@@ -52,26 +84,21 @@ const MyAppointmentsPage = () => {
 
   const handleConfirmCancel = async () => {
     if (!appointmentToCancel) return;
-     try {
+    try {
       await cancelAppointment(appointmentToCancel);
       setAppointments((prev) => prev.filter((appt) => appt._id !== appointmentToCancel));
       setError(null);
     } catch (err) {
-      
       setError("Failed to cancel appointment");
     } finally {
       handleClose();
     }
   };
 
-
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <CircularProgress />;
   if (error) return <p className="text-red-500">{error}</p>;
 
-  if (loading) return <CircularProgress />;
-
-
- return (
+  return (
     <div className="max-w-4xl mx-auto mt-10 p-4 min-h-[55vh]">
       <Typography variant="h4" className="mb-4 text-center text-sky-700 ">
         My Appointments
@@ -98,9 +125,7 @@ const MyAppointmentsPage = () => {
                   <p className="font-semibold text-lg text-sky-600">
                     Dr. {appt.doctor.firstname} {appt.doctor.lastname}
                   </p>
-                  <p className="text-gray-500">
-                    {appt.doctor.specialization.name}
-                  </p>
+                  <p className="text-gray-500">{appt.doctor.specialization.name}</p>
                 </div>
               </div>
 
@@ -150,7 +175,6 @@ const MyAppointmentsPage = () => {
       </Dialog>
     </div>
   );
-  
 };
 
 export default MyAppointmentsPage;

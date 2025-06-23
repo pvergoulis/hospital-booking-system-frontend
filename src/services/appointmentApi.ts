@@ -70,3 +70,21 @@ export const getBookedAppointmentsForDoctor = async (
 
   return res.data.appointments;
 };
+
+
+export const updatePastPendingAppointments = async () => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.patch(
+    `${API_URL}/update-past-pending`,
+    {}, 
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return res.data;
+};
