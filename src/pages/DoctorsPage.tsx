@@ -19,6 +19,7 @@ const DoctorPage = () => {
     const lastname = params.row.lastname;
     navigate(`/doctors/${lastname}`);
   };
+  
 
   useEffect(() => {
     const fetchDoctors = async () => {
