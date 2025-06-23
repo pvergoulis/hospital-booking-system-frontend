@@ -23,7 +23,9 @@ const LoggedInHeader = () => {
     <>
       <nav className="flex bg-blue-500 h-24 items-center justify-between p-4 w-full fixed ">
         <div>
-          <img src="/logo4.png" alt="logo" className="w-55 text-white" />
+          <NavLink to="/welcome">
+            <img src="/logo4.png" alt="logo" className="w-55 text-white" />
+          </NavLink>
         </div>
 
         <div className="md:hidden">
