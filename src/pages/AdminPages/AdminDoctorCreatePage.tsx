@@ -63,9 +63,7 @@ const AdminDoctorCreatePage = () => {
       clinic: { _id: "", name: "" },
     },
   });
-  useEffect(() => {
-    console.log("Form errors:", errors);
-  }, [errors]);
+  
 
   const watchFields = watch();
   const { isDisabledStepOne, isDisabledStepTwo, isDisabledStepThree } =
