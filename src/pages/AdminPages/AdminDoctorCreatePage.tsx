@@ -260,7 +260,6 @@ const AdminDoctorCreatePage = () => {
 
               {/* Clinic Select */}
             
-
               <Controller
                 name="clinic._id"
                 control={control}
