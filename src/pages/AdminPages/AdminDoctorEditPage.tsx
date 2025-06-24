@@ -77,14 +77,9 @@ const AdminDoctorEditPage = () => {
     fetchData();
   }, [lastname, setValue]);
 
-  useEffect(() => {
-    if (Object.keys(errors).length > 0) {
-      console.log("Validation errors:", errors);
-    }
-  }, [errors]);
 
   const onSubmit = async (data: doctorType) => {
-    console.log("Υποβλήθηκαν τα δεδομένα:", data);
+    console.log("Submitted data :", data);
     try {
       const payload = {
         firstname: data.firstname,
