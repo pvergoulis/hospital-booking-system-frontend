@@ -10,6 +10,7 @@ import DoctorPage from "./pages/DoctorsPage";
 import DoctorDetailsPage from "./pages/DoctorDetailsPage"
 import MyAppointmentsPage from "./pages/MyAppointmentsPage";
 import AboutPage from "./pages/AboutPage";
+import AdminHomePage from "./pages/AdminPages/AdminHomePage";
 function App() {
  
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/doctors/:lastname" element={<DoctorDetailsPage />} />
             <Route path="/myAppointments" element={<MyAppointmentsPage/>}/>
             <Route path="/about" element={<AboutPage/>}/>
+            <Route path ="admin" element={<AdminHomePage/>}/>
           </Route>
 
 
