@@ -308,18 +308,6 @@ const AdminDoctorEditPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<doctorType>({
     resolver: zodResolver(doctorSchema),
-    defaultValues: {
-      _id: "",
-      firstname: "",
-      lastname: "",
-      image: "",
-      experience: "",
-      cv: "",
-      specialization: { _id: "", name: "" },
-      clinic: { _id: "", name: "" },
-      amka: "",
-      availableHours: [],
-    },
   });
 
   useEffect(() => {
