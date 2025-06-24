@@ -66,7 +66,7 @@ export const getDoctorByLastname = async (lastname: string): Promise<doctorType>
 };
 
 export const updateDoctorById = async (id: string, updatedData: Partial<doctorType>): Promise<doctorType> => {
-   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   try {
     const response = await axios.patch(`${API_URL}/update/${id}`, updatedData,
