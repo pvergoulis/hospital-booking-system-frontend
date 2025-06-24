@@ -19,7 +19,6 @@ const DoctorPage = () => {
     const lastname = params.row.lastname;
     navigate(`/doctors/${lastname}`);
   };
-  
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -83,7 +82,7 @@ const DoctorPage = () => {
   ];
 
   return (
-    <Box sx={{ padding: "4rem" }}>
+    <Box sx={{ padding: "4rem", minHeight: "60vh" }}>
       <div className="flex justify-between items-center">
         <Typography
           variant="h5"
@@ -93,7 +92,10 @@ const DoctorPage = () => {
           Doctor's List
         </Typography>
 
-        <Typography sx={{ fontSize: "1.2rem" }} className="text-cyan-500">
+        <Typography
+          sx={{ fontSize: "1.2rem", fontWeight: "bold" }}
+          className="text-cyan-500"
+        >
           Click on the doctor you need to book an appointment
         </Typography>
       </div>
