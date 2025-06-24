@@ -4,7 +4,6 @@ export type clinicType = {
     _id : string,
     name : string
 }
-
 const API_URL = "http://localhost:3000/api/clinics"
 
 
