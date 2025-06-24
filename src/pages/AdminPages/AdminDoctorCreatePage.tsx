@@ -19,16 +19,13 @@ import { type specializationType } from "../../services/specializationApi";
 import { type clinicType } from "../../services/clinicsApi";
 import { getAllSpecialization } from "../../services/specializationApi";
 import { getAllClinics } from "../../services/clinicsApi";
-import {
-  isStepOneDisabled,
-  isStepTwoDisabled,
-  isStepThreeDisabled,
-} from "../../utils/createDoctorFormWatchUtils";
+import { createDoctor } from "../../services/doctorApi";
 import { useDoctorStepValidation } from "../../hooks/useDoctorStepValidation";
 
 const AdminDoctorCreatePage = () => {
   const [registerMessage, setRegisterMessage] = useState<string | null>(null);
   const { step, nextStep, prevStep } = useStepper(2);
+
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [specializations, setSpecializations] = useState<specializationType[]>(
     []
@@ -56,30 +53,43 @@ const AdminDoctorCreatePage = () => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors, touchedFields },
   } = useForm<doctorType>({
     resolver: zodResolver(doctorSchema),
     mode: "onChange",
+    defaultValues: {
+      specialization: { _id: "", name: "" },
+      clinic: { _id: "", name: "" },
+    },
   });
+  useEffect(() => {
+    console.log("Form errors:", errors);
+  }, [errors]);
 
   const watchFields = watch();
   const { isDisabledStepOne, isDisabledStepTwo, isDisabledStepThree } =
     useDoctorStepValidation(watchFields);
 
-  const onSubmit = async (data: doctorType) => {
-    console.log("Submitted data", data);
-    try {
-      await registerUser(data);
-      setRegisterMessage(" Success Registration");
-      setIsSuccess(true);
-      console.log("User registered successfully:");
-    } catch (error) {
-      console.log("Error in creating new user", error);
-      setRegisterMessage(" Failed in creating new user");
-      setIsSuccess(false);
-    }
-  };
+    const onSubmit = async (data: doctorType) => {
+      console.log("Submitted data", data);
+      try {
+        await createDoctor(data);
+        setRegisterMessage(" Success Registration");
+        setIsSuccess(true);
+        console.log("Doctor registered successfully:");
+      } catch (error) {
+        console.log("Error in creating new doctor", error);
+        setRegisterMessage(" Failed in creating new Doctor");
+        setIsSuccess(false);
+      }
+    };
 
+
+  useEffect(() => {
+  console.log("specializations", specializations);
+  console.log("clinics", clinics);
+}, [specializations, clinics]);
   return (
     <>
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
@@ -165,7 +175,6 @@ const AdminDoctorCreatePage = () => {
               <TextField
                 placeholder="Image (URL)"
                 fullWidth
-                required
                 id="image"
                 label="Image"
                 {...register("image")}
@@ -214,54 +223,75 @@ const AdminDoctorCreatePage = () => {
           {step === 2 && (
             <div className="space-y-4">
               {/* Specialization Select */}
-              <FormControl
-                fullWidth
-                error={!!errors.specialization?._id}
-                sx={{ mb: 2 }}
-              >
-                <InputLabel id="specialization-label">
-                  Specialization
-                </InputLabel>
-                <Select
-                  labelId="specialization-label"
-                  id="specialization"
-                  label="Specialization"
-                  defaultValue=""
-                  {...register("specialization._id")}
-                >
-                  {specializations.map((spec) => (
-                    <MenuItem key={spec._id} value={spec._id}>
-                      {spec.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errors.specialization?._id && (
-                  <FormHelperText>
-                    {errors.specialization._id.message}
-                  </FormHelperText>
+            
+              <Controller
+                name="specialization._id"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <FormControl
+                    fullWidth
+                    error={!!errors.specialization?._id}
+                    sx={{ mb: 2 }}
+                  >
+                    <InputLabel id="specialization-label">
+                      Specialization
+                    </InputLabel>
+                    <Select
+                      labelId="specialization-label"
+                      id="specialization"
+                      label="Specialization"
+                      {...field}
+                    >
+                      {specializations.map((spec) => (
+                        <MenuItem key={spec._id} value={spec._id}>
+                          {spec.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errors.specialization?._id && (
+                      <FormHelperText>
+                        {errors.specialization._id.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
                 )}
-              </FormControl>
+              />
 
               {/* Clinic Select */}
-              <FormControl fullWidth error={!!errors.clinic?._id} sx={{ mb: 2 }}>
-                <InputLabel id="clinic-label">Clinic</InputLabel>
-                <Select
-                  labelId="clinic-label"
-                  id="clinic"
-                  label="Clinic"
-                  defaultValue=""
-                  {...register("clinic._id")}
-                >
-                  {clinics.map((clinic) => (
-                    <MenuItem key={clinic._id} value={clinic._id}>
-                      {clinic.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errors.clinic?._id && (
-                  <FormHelperText>{errors.clinic._id.message}</FormHelperText>
+            
+
+              <Controller
+                name="clinic._id"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <FormControl
+                    fullWidth
+                    error={!!errors.clinic?._id}
+                    sx={{ mb: 2 }}
+                  >
+                    <InputLabel id="clinic-label">Clinic</InputLabel>
+                    <Select
+                      labelId="clinic-label"
+                      id="clinic"
+                      label="Clinic"
+                      {...field}
+                    >
+                      {clinics.map((clinic) => (
+                        <MenuItem key={clinic._id } value={clinic._id}>
+                          {clinic.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errors.clinic?._id && (
+                      <FormHelperText>
+                        {errors.clinic._id.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
                 )}
-              </FormControl>
+              />
             </div>
           )}
 
