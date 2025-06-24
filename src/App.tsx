@@ -13,6 +13,7 @@ import AboutPage from "./pages/AboutPage";
 import AdminHomePage from "./pages/AdminPages/AdminHomePage";
 import AdminDoctorPage from "./pages/AdminPages/AdminDoctorsPage";
 import AdminDoctorEditPage from "./pages/AdminPages/AdminDoctorEditPage";
+import AdminDoctorCreatePage from "./pages/AdminPages/AdminDoctorCreatePage";
 function App() {
  
 
@@ -37,6 +38,7 @@ function App() {
             <Route path ="admin" element={<AdminHomePage/>}/>
             <Route path="/doctor-admin" element={<AdminDoctorPage/>}/>
             <Route path="/doctors/edit/:lastname" element={<AdminDoctorEditPage />} />
+            <Route path="/doctor-create" element={<AdminDoctorCreatePage/>}/>
           </Route>
 
 
