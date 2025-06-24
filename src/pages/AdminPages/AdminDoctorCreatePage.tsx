@@ -19,6 +19,12 @@ import { type specializationType } from "../../services/specializationApi";
 import { type clinicType } from "../../services/clinicsApi";
 import { getAllSpecialization } from "../../services/specializationApi";
 import { getAllClinics } from "../../services/clinicsApi";
+import {
+  isStepOneDisabled,
+  isStepTwoDisabled,
+  isStepThreeDisabled,
+} from "../../utils/createDoctorFormWatchUtils";
+import { useDoctorStepValidation } from "../../hooks/useDoctorStepValidation";
 
 const AdminDoctorCreatePage = () => {
   const [registerMessage, setRegisterMessage] = useState<string | null>(null);
@@ -55,6 +61,10 @@ const AdminDoctorCreatePage = () => {
     resolver: zodResolver(doctorSchema),
     mode: "onChange",
   });
+
+  const watchFields = watch();
+  const { isDisabledStepOne, isDisabledStepTwo, isDisabledStepThree } =
+    useDoctorStepValidation(watchFields);
 
   const onSubmit = async (data: doctorType) => {
     console.log("Submitted data", data);
@@ -110,7 +120,7 @@ const AdminDoctorCreatePage = () => {
                 label="Firstname"
                 {...register("firstname")}
                 sx={{ mb: 2 }}
-                error={!!errors.firstname}
+                error={!!errors.firstname && touchedFields.firstname}
                 helperText={errors.firstname?.message}
                 FormHelperTextProps={{
                   sx: { color: "#d32f2f", fontWeight: "bold" },
@@ -206,7 +216,7 @@ const AdminDoctorCreatePage = () => {
               {/* Specialization Select */}
               <FormControl
                 fullWidth
-                error={!!errors.specialization}
+                error={!!errors.specialization?._id}
                 sx={{ mb: 2 }}
               >
                 <InputLabel id="specialization-label">
@@ -233,7 +243,7 @@ const AdminDoctorCreatePage = () => {
               </FormControl>
 
               {/* Clinic Select */}
-              <FormControl fullWidth error={!!errors.clinic} sx={{ mb: 2 }}>
+              <FormControl fullWidth error={!!errors.clinic?._id} sx={{ mb: 2 }}>
                 <InputLabel id="clinic-label">Clinic</InputLabel>
                 <Select
                   labelId="clinic-label"
@@ -263,11 +273,11 @@ const AdminDoctorCreatePage = () => {
               <Button
                 variant="contained"
                 onClick={nextStep}
-                // disabled={
-                //   (step === 0 && isDisabledStepOne) ||
-                //   (step === 1 && isDisabledStepTwo) ||
-                //   (step === 2 && isDisabledStepThree)
-                // }
+                disabled={
+                  (step === 0 && isDisabledStepOne) ||
+                  (step === 1 && isDisabledStepTwo) ||
+                  (step === 2 && isDisabledStepThree)
+                }
               >
                 Next
               </Button>

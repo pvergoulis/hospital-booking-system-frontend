@@ -3,8 +3,8 @@ import { z } from "zod"
 
 export const doctorSchema = z.object({
     _id: z.string(),
-    firstname : z.string().nonempty("Firstname is required"),
-    lastname : z.string().nonempty("Lastname is required"),
+    firstname : z.string().nonempty("Firstname is required").min(3, "Must be atleast 3 characters"),
+    lastname : z.string().nonempty("Lastname is required").min(3, "Must be atleast 3 characters"),
     image : z.string().optional(),
     experience : z.string().optional(),
     cv : z.string().optional(),
@@ -16,7 +16,7 @@ export const doctorSchema = z.object({
       _id: z.string(),
       name: z.string(),
     }),
-    amka : z.string().length(11,"AMKA must be exactly 11 characters").nonempty(),
+    amka : z.string().length(11,"AMKA must be exactly 11 characters").nonempty("Amka is required"),
     availableHours: z
     .array(
       z.object({
