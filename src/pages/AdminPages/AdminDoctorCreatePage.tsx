@@ -1,22 +1,49 @@
 import { useEffect, useState } from "react";
 import StepperWizzard from "../../components/Stepper/StepperWizzard";
-import { Container, Typography, Button, TextField,  MenuItem,
+import {
+  Container,
+  Typography,
+  Button,
+  TextField,
+  MenuItem,
   Select,
   InputLabel,
   FormControl,
-  FormHelperText } from "@mui/material";
+  FormHelperText,
+} from "@mui/material";
 import { useStepper } from "../../hooks/useStepper";
-import { useForm,Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { doctorSchema, type doctorType } from "../../types/doctorTypes";
+import { type specializationType } from "../../services/specializationApi";
+import { type clinicType } from "../../services/clinicsApi";
+import { getAllSpecialization } from "../../services/specializationApi";
+import { getAllClinics } from "../../services/clinicsApi";
 
 const AdminDoctorCreatePage = () => {
   const [registerMessage, setRegisterMessage] = useState<string | null>(null);
   const { step, nextStep, prevStep } = useStepper(2);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+  const [specializations, setSpecializations] = useState<specializationType[]>(
+    []
+  );
+  const [clinics, setClinics] = useState<clinicType[]>([]);
 
   useEffect(() => {
     document.title = "Parvathy Hospital | Create Doctor Page";
+    const fetchData = async () => {
+      try {
+        const [specializationsData, clinicsData] = await Promise.all([
+          getAllSpecialization(),
+          getAllClinics(),
+        ]);
+        setSpecializations(specializationsData);
+        setClinics(clinicsData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const {
@@ -173,10 +200,60 @@ const AdminDoctorCreatePage = () => {
               />
             </div>
           )}
-            {/* step 2 */}
-            
+          {/* step 3 */}
+          {step === 2 && (
+            <div className="space-y-4">
+              {/* Specialization Select */}
+              <FormControl
+                fullWidth
+                error={!!errors.specialization}
+                sx={{ mb: 2 }}
+              >
+                <InputLabel id="specialization-label">
+                  Specialization
+                </InputLabel>
+                <Select
+                  labelId="specialization-label"
+                  id="specialization"
+                  label="Specialization"
+                  defaultValue=""
+                  {...register("specialization._id")}
+                >
+                  {specializations.map((spec) => (
+                    <MenuItem key={spec._id} value={spec._id}>
+                      {spec.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.specialization?._id && (
+                  <FormHelperText>
+                    {errors.specialization._id.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
 
-            
+              {/* Clinic Select */}
+              <FormControl fullWidth error={!!errors.clinic} sx={{ mb: 2 }}>
+                <InputLabel id="clinic-label">Clinic</InputLabel>
+                <Select
+                  labelId="clinic-label"
+                  id="clinic"
+                  label="Clinic"
+                  defaultValue=""
+                  {...register("clinic._id")}
+                >
+                  {clinics.map((clinic) => (
+                    <MenuItem key={clinic._id} value={clinic._id}>
+                      {clinic.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.clinic?._id && (
+                  <FormHelperText>{errors.clinic._id.message}</FormHelperText>
+                )}
+              </FormControl>
+            </div>
+          )}
 
           <div className="flex justify-between mt-4">
             <Button variant="outlined" onClick={prevStep} disabled={step === 0}>
