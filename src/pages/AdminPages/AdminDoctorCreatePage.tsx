@@ -21,6 +21,7 @@ import { getAllSpecialization } from "../../services/specializationApi";
 import { getAllClinics } from "../../services/clinicsApi";
 import { createDoctor } from "../../services/doctorApi";
 import { useDoctorStepValidation } from "../../hooks/useDoctorStepValidation";
+import { useNavigate } from "react-router";
 
 const AdminDoctorCreatePage = () => {
   const [registerMessage, setRegisterMessage] = useState<string | null>(null);
@@ -31,6 +32,8 @@ const AdminDoctorCreatePage = () => {
     []
   );
   const [clinics, setClinics] = useState<clinicType[]>([]);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     document.title = "Parvathy Hospital | Create Doctor Page";
@@ -76,6 +79,9 @@ const AdminDoctorCreatePage = () => {
         setRegisterMessage(" Success Registration");
         setIsSuccess(true);
         console.log("Doctor registered successfully:");
+        setTimeout(()=>{
+          navigate("/doctor-admin")
+        },2000)
       } catch (error) {
         console.log("Error in creating new doctor", error);
         setRegisterMessage(" Failed in creating new Doctor");
@@ -83,13 +89,9 @@ const AdminDoctorCreatePage = () => {
       }
     };
 
-
-  useEffect(() => {
-  console.log("specializations", specializations);
-  console.log("clinics", clinics);
-}, [specializations, clinics]);
   return (
     <>
+      
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
         <StepperWizzard step={step} />
         {registerMessage && (
