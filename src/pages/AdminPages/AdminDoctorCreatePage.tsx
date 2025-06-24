@@ -14,7 +14,7 @@ import {
 import { useStepper } from "../../hooks/useStepper";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { doctorSchema, type doctorType } from "../../types/doctorTypes";
+import { createDoctorSchema, type doctorCreateType } from "../../types/doctorTypes";
 import { type specializationType } from "../../services/specializationApi";
 import { type clinicType } from "../../services/clinicsApi";
 import { getAllSpecialization } from "../../services/specializationApi";
@@ -55,8 +55,8 @@ const AdminDoctorCreatePage = () => {
     watch,
     control,
     formState: { errors, touchedFields },
-  } = useForm<doctorType>({
-    resolver: zodResolver(doctorSchema),
+  } = useForm<doctorCreateType >({
+    resolver: zodResolver(createDoctorSchema),
     mode: "onChange",
     defaultValues: {
       specialization: { _id: "", name: "" },
@@ -71,7 +71,7 @@ const AdminDoctorCreatePage = () => {
   const { isDisabledStepOne, isDisabledStepTwo, isDisabledStepThree } =
     useDoctorStepValidation(watchFields);
 
-    const onSubmit = async (data: doctorType) => {
+    const onSubmit = async (data: doctorCreateType ) => {
       console.log("Submitted data", data);
       try {
         await createDoctor(data);

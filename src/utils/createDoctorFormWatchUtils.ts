@@ -1,9 +1,9 @@
-import { type doctorType } from "../types/doctorTypes";
+import { type doctorCreateType  } from "../types/doctorTypes";
 
 
-type StepOneFields = Pick<doctorType, "firstname" | "lastname" | "experience">;
-type StepTwoFields = Pick<doctorType, "image" | "amka" | "cv">;
-type StepThreeFields = Pick<doctorType, "specialization" | "clinic">;
+type StepOneFields = Pick<doctorCreateType , "firstname" | "lastname" | "experience">;
+type StepTwoFields = Pick<doctorCreateType , "image" | "amka" | "cv">;
+type StepThreeFields = Pick<doctorCreateType , "specialization" | "clinic">;
 
 
 export const isStepOneDisabled = ({ firstname, lastname, experience }: StepOneFields) =>

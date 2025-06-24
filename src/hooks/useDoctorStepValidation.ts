@@ -3,9 +3,9 @@ import {
   isStepTwoDisabled,
   isStepThreeDisabled,
 } from "../utils/createDoctorFormWatchUtils";
-import { type doctorType } from "../types/doctorTypes";
+import { type doctorCreateType } from "../types/doctorTypes";
 
-export const useDoctorStepValidation = (watchedValues: doctorType) => {
+export const useDoctorStepValidation = (watchedValues: doctorCreateType ) => {
   const isDisabledStepOne = isStepOneDisabled({
     firstname: watchedValues.firstname ?? "",
     lastname: watchedValues.lastname ?? "",

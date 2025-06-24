@@ -1,4 +1,4 @@
-import { type doctorType, type doctorTypeCard } from "../types/doctorTypes";
+import { type doctorType, type doctorTypeCard , type doctorCreateType} from "../types/doctorTypes";
 import axios from "axios";
 
 const API_URL = "http://localhost:3000/api/doctors";
@@ -90,11 +90,11 @@ export const updateDoctorById = async (
 };
 
 export const createDoctor = async (
-  newDoctor: doctorType
-): Promise<doctorType> => {
+  newDoctor: doctorCreateType
+): Promise<doctorCreateType> => {
   const token = localStorage.getItem("token");
 
-  const res = await axios.post<doctorType>(`${API_URL}/create`, newDoctor,{
+  const res = await axios.post<doctorCreateType>(`${API_URL}/create`, newDoctor,{
     headers: {
       Authorization: `Bearer ${token}`,
     }
