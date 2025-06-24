@@ -104,3 +104,19 @@ export const createDoctor = async (
   const data = res.data;
   return data;
 };
+
+
+export const deleteDoctorById = async (id: string): Promise<doctorType> => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.delete<{ status: boolean; data: doctorType }>(
+    `${API_URL}/delete/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data.data;
+}

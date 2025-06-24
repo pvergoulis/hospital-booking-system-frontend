@@ -1,41 +1,34 @@
 import { useEffect, useState } from "react";
-import {
-  DataGrid,
-  type GridColDef,
-} from "@mui/x-data-grid";
-import { getAllDoctors } from "../../services/doctorApi";
+import { DataGrid, type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
+import { getAllDoctors, deleteDoctorById } from "../../services/doctorApi";
 import { type doctorTypeCard } from "../../types/doctorTypes";
-import { Box, TextField, Typography, Button, Stack } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import { NavLink, useNavigate } from "react-router";
-import { type GridRenderCellParams } from "@mui/x-data-grid";
 
 const AdminDoctorPage = () => {
   const [doctors, setDoctors] = useState<doctorTypeCard[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 8,
-  });
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 8 });
+
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [doctorToDelete, setDoctorToDelete] = useState<doctorTypeCard | null>(null);
+
   const navigate = useNavigate();
-
-  const handleRowClick = (params: any) => {
-    const lastname = params.row.lastname;
-    navigate(`/doctors/${lastname}`);
-  };
-
-  const handleDelete = (doctor: doctorTypeCard) => {
-    console.log("Delete doctor:", doctor);
-    
-  };
-
-  const handleUpdate = (doctor: doctorTypeCard) => {
-    console.log("Update doctor:", doctor);
-    navigate(`/doctors/edit/${doctor.lastname}`);
-  };
 
   useEffect(() => {
     const fetchDoctors = async () => {
-      document.title = "Parvathy Hospital | Doctors Page";
+      document.title = "Parvathy Hospital | Admin Doctors Page";
       try {
         const data = await getAllDoctors();
         setDoctors(data);
@@ -43,6 +36,7 @@ const AdminDoctorPage = () => {
         console.error("Error fetching doctors:", error);
       }
     };
+
     fetchDoctors();
   }, []);
 
@@ -50,12 +44,43 @@ const AdminDoctorPage = () => {
     (doc) =>
       doc &&
       doc._id &&
-      doc.specialization &&
-      doc.specialization.name &&
-      doc.clinic &&
-      doc.clinic.name &&
+      doc.specialization?.name &&
+      doc.clinic?.name &&
       doc.firstname.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const openDeleteDialog = (doctor: doctorTypeCard) => {
+    setDoctorToDelete(doctor);
+    setOpenConfirm(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenConfirm(false);
+    setDoctorToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!doctorToDelete?._id) return;
+
+    try {
+      await deleteDoctorById(doctorToDelete._id);
+      setDoctors((prev) => prev.filter((d) => d._id !== doctorToDelete._id));
+    } catch (error) {
+      console.error("Failed to delete doctor:", error);
+      alert("Failed to delete doctor. Please try again.");
+    } finally {
+      handleCloseDialog();
+    }
+  };
+
+  const handleRowClick = (params: any) => {
+    const lastname = params.row.lastname;
+    navigate(`/doctors/${lastname}`);
+  };
+
+  const handleUpdate = (doctor: doctorTypeCard) => {
+    navigate(`/doctors/edit/${doctor.lastname}`);
+  };
 
   const columns: GridColDef[] = [
     { field: "firstname", headerName: "Firstname", flex: 1, sortable: true },
@@ -65,32 +90,16 @@ const AdminDoctorPage = () => {
       headerName: "Specialization",
       flex: 1,
       sortable: true,
-      renderCell: (params) => {
-        const spec = params.value;
-        if (!spec || typeof spec !== "object") return "—";
-        return spec.name || "—";
-      },
-      sortComparator: (v1, v2) => {
-        const name1 = v1?.name?.toLowerCase() || "";
-        const name2 = v2?.name?.toLowerCase() || "";
-        return name1.localeCompare(name2);
-      },
+      renderCell: (params) => params.value?.name || "—",
+      sortComparator: (v1, v2) => (v1?.name || "").localeCompare(v2?.name || ""),
     },
     {
       field: "clinic",
       headerName: "Clinic",
       flex: 1,
       sortable: true,
-      renderCell: (params) => {
-        const clinic = params.value;
-        if (!clinic || typeof clinic !== "object") return "—";
-        return clinic.name || "—";
-      },
-      sortComparator: (v1, v2) => {
-        const name1 = v1?.name?.toLowerCase() || "";
-        const name2 = v2?.name?.toLowerCase() || "";
-        return name1.localeCompare(name2);
-      },
+      renderCell: (params) => params.value?.name || "—",
+      sortComparator: (v1, v2) => (v1?.name || "").localeCompare(v2?.name || ""),
     },
     {
       field: "actions",
@@ -99,11 +108,7 @@ const AdminDoctorPage = () => {
       sortable: false,
       filterable: false,
       renderCell: (params: GridRenderCellParams<doctorTypeCard>) => (
-        <Stack
-          direction="row"
-          spacing={2}
-          marginTop="0.7rem"
-        >
+        <Stack direction="row" spacing={2} marginTop="0.7rem">
           <Button
             variant="outlined"
             color="primary"
@@ -121,7 +126,7 @@ const AdminDoctorPage = () => {
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              handleDelete(params.row);
+              openDeleteDialog(params.row);
             }}
           >
             Delete
@@ -134,14 +139,9 @@ const AdminDoctorPage = () => {
   return (
     <Box sx={{ padding: "4rem" }}>
       <div className="flex justify-between items-center">
-        <Typography
-          variant="h5"
-          gutterBottom
-          className="text-red-500  pt-4 pb-4 text"
-        >
+        <Typography variant="h5" gutterBottom className="text-red-500 pt-4 pb-4">
           Doctor's List
         </Typography>
-
         <Typography sx={{ fontSize: "1.2rem" }} className="text-cyan-500">
           <NavLink to="/doctor-create">Click Here to insert new Doctor</NavLink>
         </Typography>
@@ -167,8 +167,25 @@ const AdminDoctorPage = () => {
         onRowClick={handleRowClick}
         sx={{ zIndex: "1000" }}
       />
+
+      <Dialog open={openConfirm} onClose={handleCloseDialog}>
+        <DialogTitle>Delete Doctor</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete Dr. {doctorToDelete?.firstname}{" "}
+            {doctorToDelete?.lastname}? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button color="error" onClick={handleConfirmDelete} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };
 
 export default AdminDoctorPage;
+
