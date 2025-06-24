@@ -25,8 +25,7 @@ const AdminDoctorPage = () => {
 
   const handleDelete = (doctor: doctorTypeCard) => {
     console.log("Delete doctor:", doctor);
-    // Εδώ κάνεις το API call για διαγραφή
-    // π.χ. await deleteDoctor(doctor._id);
+    
   };
 
   const handleUpdate = (doctor: doctorTypeCard) => {
