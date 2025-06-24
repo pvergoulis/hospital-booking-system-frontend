@@ -117,6 +117,7 @@ export const deleteDoctorById = async (id: string): Promise<doctorType> => {
       },
     }
   );
-
+  
+  
   return res.data.data;
 }
