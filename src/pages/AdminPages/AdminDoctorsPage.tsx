@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { DataGrid, type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  type GridColDef,
+  type GridRenderCellParams,
+} from "@mui/x-data-grid";
 import { getAllDoctors, deleteDoctorById } from "../../services/doctorApi";
 import { type doctorTypeCard } from "../../types/doctorTypes";
 import {
@@ -19,10 +23,15 @@ import { NavLink, useNavigate } from "react-router";
 const AdminDoctorPage = () => {
   const [doctors, setDoctors] = useState<doctorTypeCard[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 8 });
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 8,
+  });
 
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [doctorToDelete, setDoctorToDelete] = useState<doctorTypeCard | null>(null);
+  const [doctorToDelete, setDoctorToDelete] = useState<doctorTypeCard | null>(
+    null
+  );
 
   const navigate = useNavigate();
 
@@ -91,7 +100,8 @@ const AdminDoctorPage = () => {
       flex: 1,
       sortable: true,
       renderCell: (params) => params.value?.name || "—",
-      sortComparator: (v1, v2) => (v1?.name || "").localeCompare(v2?.name || ""),
+      sortComparator: (v1, v2) =>
+        (v1?.name || "").localeCompare(v2?.name || ""),
     },
     {
       field: "clinic",
@@ -99,7 +109,8 @@ const AdminDoctorPage = () => {
       flex: 1,
       sortable: true,
       renderCell: (params) => params.value?.name || "—",
-      sortComparator: (v1, v2) => (v1?.name || "").localeCompare(v2?.name || ""),
+      sortComparator: (v1, v2) =>
+        (v1?.name || "").localeCompare(v2?.name || ""),
     },
     {
       field: "actions",
@@ -137,12 +148,16 @@ const AdminDoctorPage = () => {
   ];
 
   return (
-    <Box sx={{ padding: "4rem" }}>
+    <Box sx={{ padding: "4rem", minHeight: "60vh" }}>
       <div className="flex justify-between items-center">
-        <Typography variant="h5" gutterBottom className="text-red-500 pt-4 pb-4">
+        <Typography
+          variant="h5"
+          gutterBottom
+          className="text-red-500 pt-4 pb-4"
+        >
           Doctor's List
         </Typography>
-        <Typography sx={{ fontSize: "1.2rem" }} className="text-cyan-500">
+        <Typography sx={{ fontSize: "1.3rem", fontWeight: "bold" }} className="text-cyan-500 underline">
           <NavLink to="/doctor-create">Click Here to insert new Doctor</NavLink>
         </Typography>
       </div>
@@ -156,17 +171,22 @@ const AdminDoctorPage = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
-      <DataGrid
-        rows={filteredDoctors}
-        columns={columns}
-        getRowId={(row) => row._id}
-        paginationModel={paginationModel}
-        onPaginationModelChange={setPaginationModel}
-        autoHeight
-        disableRowSelectionOnClick
-        onRowClick={handleRowClick}
-        sx={{ zIndex: "1000" }}
-      />
+      <Box sx={{ overflowX: "auto" }}>
+        <Box sx={{ minWidth: 800 }}>
+       
+          <DataGrid
+            rows={filteredDoctors}
+            columns={columns}
+            getRowId={(row) => row._id}
+            paginationModel={paginationModel}
+            onPaginationModelChange={setPaginationModel}
+            autoHeight
+            disableRowSelectionOnClick
+            onRowClick={handleRowClick}
+            sx={{ zIndex: "1000" }}
+          />
+        </Box>
+      </Box>
 
       <Dialog open={openConfirm} onClose={handleCloseDialog}>
         <DialogTitle>Delete Doctor</DialogTitle>
@@ -188,4 +208,3 @@ const AdminDoctorPage = () => {
 };
 
 export default AdminDoctorPage;
-
