@@ -89,6 +89,7 @@ export const updateDoctorById = async (
   }
 };
 
+
 export const createDoctor = async (
   newDoctor: doctorCreateType
 ): Promise<doctorCreateType> => {
