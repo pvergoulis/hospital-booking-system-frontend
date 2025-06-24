@@ -6,7 +6,6 @@ type StepTwoFields = Pick<doctorType, "image" | "amka" | "cv">;
 type StepThreeFields = Pick<doctorType, "specialization" | "clinic">;
 
 
-
 export const isStepOneDisabled = ({ firstname, lastname, experience }: StepOneFields) =>
   !firstname || firstname.trim().length < 3 ||
   !lastname || lastname.trim().length < 3 ||
