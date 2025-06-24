@@ -1,25 +1,38 @@
 import { useEffect, useState } from "react";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import { getAllDoctors } from "../services/doctorApi";
-import { type doctorTypeCard } from "../types/doctorTypes";
-import { Box, TextField, Typography } from "@mui/material";
-import { useNavigate } from "react-router";
+import {
+  DataGrid,
+  type GridColDef,
+} from "@mui/x-data-grid";
+import { getAllDoctors } from "../../services/doctorApi";
+import { type doctorTypeCard } from "../../types/doctorTypes";
+import { Box, TextField, Typography, Button, Stack } from "@mui/material";
+import { NavLink, useNavigate } from "react-router";
+import { type GridRenderCellParams } from "@mui/x-data-grid";
 
-const DoctorPage = () => {
+const AdminDoctorPage = () => {
   const [doctors, setDoctors] = useState<doctorTypeCard[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: 8,
   });
-
   const navigate = useNavigate();
 
   const handleRowClick = (params: any) => {
     const lastname = params.row.lastname;
     navigate(`/doctors/${lastname}`);
   };
-  
+
+  const handleDelete = (doctor: doctorTypeCard) => {
+    console.log("Delete doctor:", doctor);
+    // Εδώ κάνεις το API call για διαγραφή
+    // π.χ. await deleteDoctor(doctor._id);
+  };
+
+  const handleUpdate = (doctor: doctorTypeCard) => {
+    console.log("Update doctor:", doctor);
+    navigate(`/doctors/edit/${doctor.lastname}`);
+  };
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -80,6 +93,43 @@ const DoctorPage = () => {
         return name1.localeCompare(name2);
       },
     },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      sortable: false,
+      filterable: false,
+      renderCell: (params: GridRenderCellParams<doctorTypeCard>) => (
+        <Stack
+          direction="row"
+          spacing={2}
+          marginTop="0.7rem"
+        >
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleUpdate(params.row);
+            }}
+          >
+            Update
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(params.row);
+            }}
+          >
+            Delete
+          </Button>
+        </Stack>
+      ),
+    },
   ];
 
   return (
@@ -94,7 +144,7 @@ const DoctorPage = () => {
         </Typography>
 
         <Typography sx={{ fontSize: "1.2rem" }} className="text-cyan-500">
-          Click on the doctor you need to book an appointment
+          <NavLink to="/doctor-create">Click Here to insert new Doctor</NavLink>
         </Typography>
       </div>
 
@@ -122,4 +172,4 @@ const DoctorPage = () => {
   );
 };
 
-export default DoctorPage;
+export default AdminDoctorPage;

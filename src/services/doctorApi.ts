@@ -64,3 +64,21 @@ export const getDoctorByLastname = async (lastname: string): Promise<doctorType>
     throw error;
   }
 };
+
+export const updateDoctorById = async (id: string, updatedData: Partial<doctorType>): Promise<doctorType> => {
+   const token = localStorage.getItem("token");
+
+  try {
+    const response = await axios.patch(`${API_URL}/update/${id}`, updatedData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error("Error updating doctor:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || "Failed to update doctor");
+  }
+};
