@@ -25,12 +25,18 @@ export const doctorSchema = z.object({
     .string()
     .length(11, "AMKA must be exactly 11 characters")
     .nonempty("Amka is required"),
+  availableHours: z
+    .array(
+      z.object({
+        day: z.string(),
+        from: z.string(),
+        to: z.string(),
+      })
+    )
+    .optional(),
 });
 
-
-
 export type doctorType = z.infer<typeof doctorSchema>;
-
 
 export const createDoctorSchema = z.object({
   firstname: z
@@ -56,10 +62,9 @@ export const createDoctorSchema = z.object({
     .string()
     .length(11, "AMKA must be exactly 11 characters")
     .nonempty("Amka is required"),
-})
+});
 
-export type doctorCreateType = z.infer<typeof createDoctorSchema>
-
+export type doctorCreateType = z.infer<typeof createDoctorSchema>;
 
 export type doctorTypeCard = {
   _id: string;
