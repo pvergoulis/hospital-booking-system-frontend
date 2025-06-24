@@ -27,6 +27,8 @@ export const doctorSchema = z.object({
     .nonempty("Amka is required"),
 });
 
+
+
 export type doctorType = z.infer<typeof doctorSchema>;
 
 export type doctorTypeCard = {
