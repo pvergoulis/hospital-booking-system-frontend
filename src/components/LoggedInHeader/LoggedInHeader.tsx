@@ -3,7 +3,10 @@ import { NavLink } from "react-router";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
 import { type DecodedToken } from "../../types/jwtTypes";
+import { useNavigate } from "react-router";
+
 const LoggedInHeader = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -12,12 +15,34 @@ const LoggedInHeader = () => {
 
   const [role, setRole] = useState<string | null>(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    const decoded = jwtDecode<DecodedToken>(token!);
-    setRole(decoded.role);
-  }, []);
+  //   const decoded = jwtDecode<DecodedToken>(token!);
+  //   setRole(decoded.role);
+  // }, []);
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    try {
+      const decoded = jwtDecode<DecodedToken>(token);
+      setRole(decoded.role);
+    } catch (err) {
+      console.error("Failed to decode token:", err);
+      setRole(null);
+    }
+  } else {
+    setRole(null);
+  }
+}, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -95,9 +120,15 @@ const LoggedInHeader = () => {
               </NavLink>
             </li>
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-              <NavLink to="/login" onClick={handleToggle}>
+              <button
+                className="cursor-pointer"
+                onClick={() => {
+                  handleToggle();
+                  handleLogout();
+                }}
+              >
                 <LogOut />
-              </NavLink>
+              </button>
             </li>
           </ul>
         </div>

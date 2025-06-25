@@ -24,6 +24,7 @@ import AdminUserUpdatePage from "./pages/AdminPages/AdminUserPages/AdminUserUpda
 import NoPermissionPage from "./pages/NoPermissionPage";
 import RequireAdmin from "./components/RequireAdminComponent/RequireAdmin";
 import NotFoundPage from "./pages/NotFoundPage";
+import RequireAuth from "./components/RequireAuthComponent/RequireAuth";
 
 function App() {
   return (
@@ -39,11 +40,46 @@ function App() {
 
           {/*  Authenticated Layout */}
           <Route element={<DashboardLayout />}>
-            <Route path="/welcome" element={<WelcomePage />} />
-            <Route path="/doctors" element={<DoctorPage />} />
-            <Route path="/doctors/:lastname" element={<DoctorDetailsPage />} />
-            <Route path="/myAppointments" element={<MyAppointmentsPage />} />
-            <Route path="/about" element={<AboutPage />} />
+            <Route
+              path="/welcome"
+              element={
+                <RequireAuth>
+                  <WelcomePage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/doctors"
+              element={
+                <RequireAuth>
+                  <DoctorPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/doctors/:lastname"
+              element={
+                <RequireAuth>
+                  <DoctorDetailsPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/myAppointments"
+              element={
+                <RequireAuth>
+                  <MyAppointmentsPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <RequireAuth>
+                  <AboutPage />
+                </RequireAuth>
+              }
+            />
 
             {/*  Route for non-admin access */}
             <Route path="/no-permission" element={<NoPermissionPage />} />
