@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   type AppointmentRequest,
   type AppointmentType,
+ type AppointmentDoctorType
 } from "../types/appointmentTypes";
 
 const API_URL = "http://localhost:3000/api/appointments";
@@ -92,4 +93,31 @@ export const getAppointmentsByDoctor = async (doctorId: string) => {
   if (!res.data.status) throw new Error("Failed to fetch appointments");
 
   return res.data.data;
+};
+
+
+export const getAllAppointments = async (): Promise<AppointmentDoctorType[]> => {
+  const token = localStorage.getItem("token");
+  console.log("Token used in getAllAppointments:", token);
+
+  if (!token) {
+    throw new Error("No auth token found");
+  }
+
+  try {
+    const res = await axios.get<{status: boolean; data: AppointmentDoctorType[]}>(`${API_URL}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log('All Appointments response:', res.data);
+
+    if (!res.data.status) throw new Error("Failed to fetch appointments");
+
+    return res.data.data;
+  } catch (error) {
+    console.error("Axios error in getAllAppointments:", error);
+    throw error;
+  }
 };

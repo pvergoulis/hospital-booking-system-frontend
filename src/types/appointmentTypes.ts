@@ -43,4 +43,5 @@ export type AppointmentDoctorType = {
     firstname: string;
     lastname: string;
   };
+  createdAt?: string;
 }
