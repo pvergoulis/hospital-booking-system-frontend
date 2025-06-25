@@ -72,7 +72,7 @@ const UpdateUserPage = () => {
         <CircularProgress />
       </Box>
     );
-  }
+  } 
 
   return (
     <Container maxWidth="sm" sx={{ mt: 5, mb: 5 }} className="space-y-6">
