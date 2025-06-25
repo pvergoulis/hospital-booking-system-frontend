@@ -29,7 +29,7 @@ const WelcomePage = () => {
 
   return (
     <>
-      <div className="lg:flex   justify-around">
+      <div className="lg:flex  justify-around">
         <div className="pt-8 space-y-6 pb-2 bg-sky-50 flex-2/3">
           <h3 className="ms-16 text-2xl text-cyan-600 text-center">
             Welcome to The Parvathy Hospital {username}
