@@ -47,6 +47,34 @@ const LoginPage = () => {
 
   const { showPassword, togglePassword } = usePasswordToggle();
 
+  // const onSubmit = async (data: userLoginType) => {
+  //   try {
+  //     const token = await loginUser(data);
+  //     localStorage.setItem("token", token);
+
+  //     const decoded = jwtDecode<DecodedToken>(token);
+  //     console.log("Decoded user:", decoded);
+
+  //     if (decoded.username) {
+  //       localStorage.setItem("username", decoded.username);
+  //       console.log(
+  //         "username saved to localStorage (decoded):",
+  //         decoded.username
+  //       );
+  //     } else {
+  //       localStorage.setItem("username", data.username);
+  //       console.log(
+  //         "username saved to localStorage (from data):",
+  //         data.username
+  //       );
+  //     }
+
+  //     navigate("/welcome");
+  //     reset();
+  //   } catch (error) {
+  //     console.error("Login failed", error);
+  //   }
+  // };
   const onSubmit = async (data: userLoginType) => {
     try {
       const token = await loginUser(data);
@@ -54,28 +82,15 @@ const LoginPage = () => {
 
       const decoded = jwtDecode<DecodedToken>(token);
       console.log("Decoded user:", decoded);
-
-      if (decoded.username) {
-        localStorage.setItem("username", decoded.username);
-        console.log(
-          "username saved to localStorage (decoded):",
-          decoded.username
-        );
-      } else {
-        localStorage.setItem("username", data.username);
-        console.log(
-          "username saved to localStorage (from data):",
-          data.username
-        );
-      }
+      localStorage.setItem("user", JSON.stringify(decoded)); // ✅ Crucial for role check
 
       navigate("/welcome");
       reset();
-    } catch (error) {
-      console.error("Login failed", error);
+    } catch (err) {
+      console.error("Login failed", err);
+      alert("Login failed. Check credentials and try again.");
     }
   };
-
   return (
     <>
       <Container
