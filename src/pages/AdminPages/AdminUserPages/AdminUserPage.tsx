@@ -100,7 +100,7 @@ const AdminUserPage = () => {
             onClick={(e) => {
               e.stopPropagation();
               navigate(`/update-user/${params.row.username}`, {
-                state: { userData: params.row }, // στέλνεις τα δεδομένα μέσω state
+                state: { userData: params.row }, 
               });
             }}
           >
