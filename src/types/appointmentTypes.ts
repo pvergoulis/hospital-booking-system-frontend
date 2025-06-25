@@ -21,3 +21,25 @@ export type AppointmentType = {
   };
   
 };
+
+
+export type AppointmentDoctorType = {
+  _id: string;
+  date: string;
+  timeSlot: string;
+  status: string;
+  doctor: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    specialization: {
+      name: string;
+    };
+    image?: string;
+  };
+  user: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+  };
+}

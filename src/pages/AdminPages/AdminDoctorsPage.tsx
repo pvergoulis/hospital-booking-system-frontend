@@ -122,6 +122,18 @@ const AdminDoctorPage = () => {
         <Stack direction="row" spacing={2} marginTop="0.7rem">
           <Button
             variant="outlined"
+            color="secondary"
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/doctor/appointments/${params.row._id}`);
+            }}
+          >
+            Appointments
+          </Button>
+
+          <Button
+            variant="outlined"
             color="primary"
             size="small"
             onClick={(e) => {
@@ -157,7 +169,10 @@ const AdminDoctorPage = () => {
         >
           Doctor's List
         </Typography>
-        <Typography sx={{ fontSize: "1.3rem", fontWeight: "bold" }} className="text-cyan-500 underline">
+        <Typography
+          sx={{ fontSize: "1.3rem", fontWeight: "bold" }}
+          className="text-cyan-500 underline"
+        >
           <NavLink to="/doctor-create">Click Here to insert new Doctor</NavLink>
         </Typography>
       </div>
@@ -173,7 +188,6 @@ const AdminDoctorPage = () => {
 
       <Box sx={{ overflowX: "auto" }}>
         <Box sx={{ minWidth: 800 }}>
-       
           <DataGrid
             rows={filteredDoctors}
             columns={columns}
