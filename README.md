@@ -40,19 +40,21 @@ npm run dev
 
 # 📦 Dependencies & Purpose
 
-Package	Description
-react, react-dom	Core UI rendering
-react-router	Routing and navigation
-react-hook-form	Modern form handling
-zod	Schema validation with form integration
-@mui/material, @mui/icons-material, @mui/x-data-grid	Elegant UI components & data grids
-@emotion/react, @emotion/styled	MUI styling system
-@fontsource/roboto	Roboto font for consistent design
-axios	API calls and HTTP requests
-jwt-decode	Decodes JWT tokens for access control
-lucide-react	Iconography (clean, sharp React icons)
-tailwindcss, @tailwindcss/vite	Utility-first CSS styling, integrated with Vite
-vite	Fast dev server and bundler (in devDependencies)
+| Package                           | Description                                         |
+|-----------------------------------|-----------------------------------------------------|
+| `react`, `react-dom`              | Core UI rendering                                   |
+| `react-router`                    | Routing and navigation                              |
+| `react-hook-form`                 | Modern form handling                                |
+| `zod`                             | Schema validation with form integration             |
+| `@mui/material`, `icons`, `grid` | Elegant UI components & data grids                  |
+| `@emotion/react`, `styled`       | MUI styling system                                  |
+| `@fontsource/roboto`             | Roboto font for consistent design                   |
+| `axios`                           | API calls and HTTP requests                         |
+| `jwt-decode`                      | Decodes JWT tokens for access control               |
+| `lucide-react`                    | Iconography (clean, sharp React icons)              |
+| `tailwindcss`, `@tailwindcss/vite`| Utility-first CSS styling, integrated with Vite     |
+| `vite`                            | Fast dev server and bundler (in devDependencies)    |
+
 
 # 🛡️ Authorization Logic
 Users are redirected based on authentication and role.
