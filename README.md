@@ -68,7 +68,7 @@ Non-authenticated users cannot access protected pages and are redirected to /log
 ## 📸 Screenshots
 
 ### 🔐 Login Page
-![Login](https://github.com/pvergoulis/hospital-management/main/assets/screenshots/login.png)
+![Login](https://https://github.com/pvergoulis/hospital-management-frontend/tree/main/src/assets/screenshots/login.png)
 
 ### 🏠 Admin Dashboard
 ![Admin Dashboard](assets/screenshots/adminDashboard.png)
