@@ -4,8 +4,8 @@ import {
   type GridColDef,
   type GridRenderCellParams,
 } from "@mui/x-data-grid";
-import { getAllDoctors, deleteDoctorById } from "../../services/doctorApi";
-import { type doctorTypeCard } from "../../types/doctorTypes";
+import { getAllDoctors, deleteDoctorById } from "../../../services/doctorApi";
+import { type doctorTypeCard } from "../../../types/doctorTypes";
 import {
   Box,
   TextField,

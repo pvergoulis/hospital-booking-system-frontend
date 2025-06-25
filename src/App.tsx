@@ -11,10 +11,14 @@ import DoctorDetailsPage from "./pages/DoctorDetailsPage"
 import MyAppointmentsPage from "./pages/MyAppointmentsPage";
 import AboutPage from "./pages/AboutPage";
 import AdminHomePage from "./pages/AdminPages/AdminHomePage";
-import AdminDoctorPage from "./pages/AdminPages/AdminDoctorsPage";
-import AdminDoctorEditPage from "./pages/AdminPages/AdminDoctorEditPage";
-import AdminDoctorCreatePage from "./pages/AdminPages/AdminDoctorCreatePage";
-import AdminDoctorAppointmentsPage from "./pages/AdminPages/AdminDoctorAppointmentsPage";
+// import AdminDoctorPage from "./pages/AdminPages/AdminDoctorsPage";
+import AdminDoctorPage from "./pages/AdminPages/AdminDoctorPages/AdminDoctorsPage";
+// import AdminDoctorEditPage from "./pages/AdminPages/AdminDoctorEditPage";
+import AdminDoctorEditPage from "./pages/AdminPages/AdminDoctorPages/AdminDoctorEditPage";
+// import AdminDoctorCreatePage from "./pages/AdminPages/AdminDoctorCreatePage";
+import AdminDoctorCreatePage from "./pages/AdminPages/AdminDoctorPages/AdminDoctorCreatePage";
+// import AdminDoctorAppointmentsPage from "./pages/AdminPages/AdminDoctorAppointmentsPage";
+import AdminDoctorAppointmentsPage from "./pages/AdminPages/AdminDoctorPages/AdminDoctorAppointmentsPage";
 import AdminAppointmentPage from "./pages/AdminPages/AdminAppointmentsPages/AdminAppointmentPage";
 function App() {
  

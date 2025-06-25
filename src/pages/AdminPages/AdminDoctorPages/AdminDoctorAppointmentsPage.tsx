@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Box, Typography, CircularProgress, Alert } from "@mui/material";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import { getAppointmentsByDoctor } from "../../services/appointmentApi";
-import { type AppointmentDoctorType } from "../../types/appointmentTypes";
+import { getAppointmentsByDoctor } from "../../../services/appointmentApi";
+import { type AppointmentDoctorType } from "../../../types/appointmentTypes";
 
 const AdminDoctorAppointmentsPage = () => {
   const { doctorId } = useParams();

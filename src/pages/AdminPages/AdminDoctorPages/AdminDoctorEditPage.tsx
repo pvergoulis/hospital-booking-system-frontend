@@ -18,12 +18,12 @@ import { useParams, useNavigate } from "react-router";
 import {
   getDoctorByLastname,
   updateDoctorById,
-} from "../../services/doctorApi";
-import { getAllSpecialization } from "../../services/specializationApi";
-import { getAllClinics } from "../../services/clinicsApi";
-import { doctorSchema, type doctorType } from "../../types/doctorTypes";
-import { type specializationType } from "../../services/specializationApi";
-import { type clinicType } from "../../services/clinicsApi";
+} from "../../../services/doctorApi";
+import { getAllSpecialization } from "../../../services/specializationApi";
+import { getAllClinics } from "../../../services/clinicsApi";
+import { doctorSchema, type doctorType } from "../../../types/doctorTypes";
+import { type specializationType } from "../../../services/specializationApi";
+import { type clinicType } from "../../../services/clinicsApi";
 
 const AdminDoctorEditPage = () => {
   const { lastname } = useParams<{ lastname: string }>();

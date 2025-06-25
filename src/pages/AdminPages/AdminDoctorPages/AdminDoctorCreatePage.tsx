@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import StepperWizzard from "../../components/Stepper/StepperWizzard";
+import StepperWizzard from "../../../components/Stepper/StepperWizzard";
 import {
   Container,
   Typography,
@@ -11,16 +11,16 @@ import {
   FormControl,
   FormHelperText,
 } from "@mui/material";
-import { useStepper } from "../../hooks/useStepper";
+import { useStepper } from "../../../hooks/useStepper";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createDoctorSchema, type doctorCreateType } from "../../types/doctorTypes";
-import { type specializationType } from "../../services/specializationApi";
-import { type clinicType } from "../../services/clinicsApi";
-import { getAllSpecialization } from "../../services/specializationApi";
-import { getAllClinics } from "../../services/clinicsApi";
-import { createDoctor } from "../../services/doctorApi";
-import { useDoctorStepValidation } from "../../hooks/useDoctorStepValidation";
+import { createDoctorSchema, type doctorCreateType } from "../../../types/doctorTypes";
+import { type specializationType } from "../../../services/specializationApi";
+import { type clinicType } from "../../../services/clinicsApi";
+import { getAllSpecialization } from "../../../services/specializationApi";
+import { getAllClinics } from "../../../services/clinicsApi";
+import { createDoctor } from "../../../services/doctorApi";
+import { useDoctorStepValidation } from "../../../hooks/useDoctorStepValidation";
 import { useNavigate } from "react-router";
 
 const AdminDoctorCreatePage = () => {
