@@ -23,6 +23,7 @@ export type AppointmentType = {
 };
 
 
+
 export type AppointmentDoctorType = {
   _id: string;
   date: string;
