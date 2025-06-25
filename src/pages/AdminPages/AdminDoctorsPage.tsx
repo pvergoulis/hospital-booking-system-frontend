@@ -120,6 +120,7 @@ const AdminDoctorPage = () => {
       filterable: false,
       renderCell: (params: GridRenderCellParams<doctorTypeCard>) => (
         <Stack direction="row" spacing={2} marginTop="0.7rem">
+          
           <Button
             variant="outlined"
             color="secondary"
