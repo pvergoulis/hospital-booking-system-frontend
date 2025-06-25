@@ -62,3 +62,19 @@ Users are redirected based on authentication and role.
 Admin users gain access to restricted /admin, /admin-user, and CRUD routes.
 
 Non-authenticated users cannot access protected pages and are redirected to /login.
+
+
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login](assets/screenshots/login.png)
+
+### 🏠 Admin Dashboard
+![Admin Dashboard](assets/screenshots/adminDashboard.png)
+
+### 🧑‍⚕️ Doctors Page
+![Doctors](assets/screenshots/doctors.png)
+
+### 📅 My Appointments
+![Appointments](assets/screenshots/my-appointments.png)
