@@ -67,14 +67,41 @@ Non-authenticated users cannot access protected pages and are redirected to /log
 
 ## 📸 Screenshots
 
+### 🔐 Home 1
+![Home](public/screenshots/home-1.png)
+
+### 🔐 Home 2
+![Home](public/screenshots/home-2.png)
+
+### 🔐 Register Page
+![Register](public/screenshots/register.png)
+
 ### 🔐 Login Page
-![Login](https://https://github.com/pvergoulis/hospital-management-frontend/tree/main/src/assets/screenshots/login.png)
+![Login](public/screenshots/login.png)
+
+### 🔐 About Page
+![About](public/screenshots/about.png)
+
+### 🔐 Welcome Page
+![Welcome](public/screenshots/welcome.png)
 
 ### 🏠 Admin Dashboard
 ![Admin Dashboard](public/screenshots/adminDashboard.png)
 
 ### 🧑‍⚕️ Doctors Page
-![Doctors](assets/screenshots/doctors.png)
+![Doctors](public/screenshots/adminDoctors.png)
+
+### 🧑‍⚕️ Doctors Create Page
+![Doctors Create](public/screenshots/createDoctor.png)
 
 ### 📅 My Appointments
-![Appointments](assets/screenshots/my-appointments.png)
+![Appointments](public/screenshots/myAppointments.png)
+
+### 📅 Admin Appointments
+![Admin Appointments](public/screenshots/adminAppointments.png)
+
+### 🧑 Admin User Page
+![Admin User](public/screenshots/adminUsers.png)
+
+### 🧑 Admin Update User Page
+![Admin Update User](public/screenshots/updateUser.png)
