@@ -23,7 +23,7 @@ const DoctorDetailsPage = () => {
   const [bookedSlots, setBookedSlots] = useState<AppointmentSlot[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchDoctorAndAppointments = async () => {
       try {
         setError(null);
@@ -34,14 +34,18 @@ const DoctorDetailsPage = () => {
         const doctorData = await getDoctorByLastname(lastname);
         setDoctor(doctorData);
 
-        const appointments = await getBookedAppointmentsForDoctor(doctorData._id);
+        const appointments = await getBookedAppointmentsForDoctor(
+          doctorData._id
+        );
 
-        const slots: AppointmentSlot[] = appointments.map((appt) => ({
-          date: appt.date.split("T")[0],
-          timeSlot: appt.timeSlot,
-        }));
+        const slots: AppointmentSlot[] = Array.isArray(appointments)
+          ? appointments.map((appt) => ({
+              date: appt.date.split("T")[0],
+              timeSlot: appt.timeSlot,
+            }))
+          : [];
         setBookedSlots(slots);
-        document.title = `Parvathy Hospital | ${lastname} Page`
+        document.title = `Parvathy Hospital | ${lastname} Page`;
       } catch (err) {
         console.error("Error fetching doctor or appointments:", err);
         setError(err instanceof Error ? err.message : "Unknown error");
@@ -50,7 +54,6 @@ const DoctorDetailsPage = () => {
 
     fetchDoctorAndAppointments();
   }, [lastname]);
-
 
   const handleBooking = async () => {
     if (!doctor || !date || !timeSlot) return;
