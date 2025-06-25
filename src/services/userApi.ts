@@ -1,4 +1,4 @@
-import {type userType } from "../types/userTypes"
+import {type userType, type userUpdateType } from "../types/userTypes"
 import axios from "axios";
 
 
@@ -12,3 +12,44 @@ export const registerUser = async(newUser: userType): Promise<userType> =>{
     const data = res.data
     return data
 }
+
+
+export const getAllUsers = async():Promise<userType[]> =>{
+    const res = await axios.get<{status: boolean; data: userType[]}>(`${API_URL}`)
+
+     if (!res.data.status) throw new Error("Failed to fetch dall users");
+     const data = res.data.data
+     return data
+}
+
+export const deleteUserById = async (id: string) => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.delete(`${API_URL}/delete/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};
+
+export const getUserByUsername = async (username: string): Promise<userType> => {
+  const token = localStorage.getItem("token");
+  const res = await axios.get(`${API_URL}/${username}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res.data.data;
+};
+
+export const updateUser = async (username: string, updatedUser: userUpdateType) => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.patch(`${API_URL}/update/${username}`, updatedUser, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

@@ -19,7 +19,9 @@ import AdminDoctorEditPage from "./pages/AdminPages/AdminDoctorPages/AdminDoctor
 import AdminDoctorCreatePage from "./pages/AdminPages/AdminDoctorPages/AdminDoctorCreatePage";
 // import AdminDoctorAppointmentsPage from "./pages/AdminPages/AdminDoctorAppointmentsPage";
 import AdminDoctorAppointmentsPage from "./pages/AdminPages/AdminDoctorPages/AdminDoctorAppointmentsPage";
+import AdminUserPage from "./pages/AdminPages/AdminUserPages/AdminUserPage";
 import AdminAppointmentPage from "./pages/AdminPages/AdminAppointmentsPages/AdminAppointmentPage";
+import AdminUserUpdatePage from "./pages/AdminPages/AdminUserPages/AdminUserUpdatePage";
 function App() {
  
 
@@ -47,6 +49,8 @@ function App() {
             <Route path="/doctor-create" element={<AdminDoctorCreatePage/>}/>
             <Route path="/doctor/appointments/:doctorId" element={<AdminDoctorAppointmentsPage/>}/>
             <Route path="/admin-appointments" element={<AdminAppointmentPage/>}/>
+            <Route path="/admin-user" element={<AdminUserPage/>} />
+            <Route path="/update-user/:username" element={<AdminUserUpdatePage/>} />
           </Route>
 
 
