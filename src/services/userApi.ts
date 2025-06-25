@@ -42,6 +42,7 @@ export const getUserByUsername = async (username: string): Promise<userType> => 
   return res.data.data;
 };
 
+
 export const updateUser = async (username: string, updatedUser: userUpdateType) => {
   const token = localStorage.getItem("token");
 
