@@ -7,6 +7,7 @@ const RequireAdmin = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/no-permission" replace />;
   }
 
+  
   return children;
 };
 export default RequireAdmin;
