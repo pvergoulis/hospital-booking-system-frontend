@@ -7,7 +7,7 @@ const DashboardLayout = () => {
     <>
       <LoggedInHeader />
 
-      <div className="min-h-[55vh] pt-16">
+      <div className="min-h-[55vh] ">
         <Outlet />
         
       </div>

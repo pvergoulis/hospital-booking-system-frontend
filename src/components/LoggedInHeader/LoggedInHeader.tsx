@@ -21,7 +21,7 @@ const LoggedInHeader = () => {
 
   return (
     <>
-      <nav className="flex bg-blue-500 h-24 items-center justify-between p-4 w-full fixed ">
+      <nav className="flex bg-blue-500 h-24 items-center justify-between p-4 w-full">
         <div>
           <NavLink to="/welcome">
             <img src="/logo4.png" alt="logo" className="w-55 text-white" />

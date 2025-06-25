@@ -7,7 +7,7 @@ const AboutPage = () => {
 
   return (
     <>
-      <div className="mt-7">
+      <div className="mt-[-5px]">
         <img
           src="banner-1.jpg"
           alt="Hospital Banner"
