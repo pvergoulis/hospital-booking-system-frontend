@@ -1,54 +1,62 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🏥 Hospital Management System
+A modern hospital management web application built with React, TailwindCSS, and Material UI — featuring full authentication & role-based authorization. This system allows users to register, log in, manage appointments, and for administrators to take full control over data with advanced CRUD functionality.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# ✨ Features
+🔐 Authentication with JSON Web Tokens (JWT)
 
-## Expanding the ESLint configuration
+🧑‍⚕️ Role-based access: differentiate between Admin and Patient
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+📅 Appointment scheduling and management
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+✍️ CRUD operations for Doctors, Appointments, Users
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+⚡ Built with React 19, TailwindCSS, and Material UI
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+✅ Form validation using React Hook Form + Zod
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+👮‍♂️ Full client-side route protection based on user role
+
+# 🧪 Demo Credentials
+You can try logging in with the following test accounts:
+
+Role	Username	Password
+Admin	vergoulis	12345
+Patient	mairh	12345
+
+
+# 1. Clone the repository
+git clone https://github.com/your-username/hospital-management.git
+cd hospital-management
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the development server
+npm run dev
+
+
+# 📦 Dependencies & Purpose
+
+Package	Description
+react, react-dom	Core UI rendering
+react-router	Routing and navigation
+react-hook-form	Modern form handling
+zod	Schema validation with form integration
+@mui/material, @mui/icons-material, @mui/x-data-grid	Elegant UI components & data grids
+@emotion/react, @emotion/styled	MUI styling system
+@fontsource/roboto	Roboto font for consistent design
+axios	API calls and HTTP requests
+jwt-decode	Decodes JWT tokens for access control
+lucide-react	Iconography (clean, sharp React icons)
+tailwindcss, @tailwindcss/vite	Utility-first CSS styling, integrated with Vite
+vite	Fast dev server and bundler (in devDependencies)
+
+# 🛡️ Authorization Logic
+Users are redirected based on authentication and role.
+
+Admin users gain access to restricted /admin, /admin-user, and CRUD routes.
+
+Non-authenticated users cannot access protected pages and are redirected to /login.
