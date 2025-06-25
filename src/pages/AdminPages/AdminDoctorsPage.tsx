@@ -188,7 +188,7 @@ const AdminDoctorPage = () => {
       />
 
       <Box sx={{ overflowX: "auto" }}>
-        <Box sx={{ minWidth: 800 }}>
+        <Box sx={{ minWidth: 1500 }}>
           <DataGrid
             rows={filteredDoctors}
             columns={columns}

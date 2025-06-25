@@ -12,7 +12,7 @@ import {
 import {
   getUserAppointments,
   cancelAppointment,
-  updatePastPendingAppointments
+  updatePastPendingAppointments,
 } from "../services/appointmentApi";
 import { type AppointmentType } from "../types/appointmentTypes";
 
@@ -40,10 +40,15 @@ const MyAppointmentsPage = () => {
     return appointments.map((appt) => {
       if (appt.status === "PENDING") {
         const apptDateTime = parseAppointmentDateTime(appt.date, appt.timeSlot);
-        console.log(`Appointment ${appt._id} datetime:`, apptDateTime.toISOString());
+        console.log(
+          `Appointment ${appt._id} datetime:`,
+          apptDateTime.toISOString()
+        );
 
         if (apptDateTime <= now) {
-          console.log(`Updating appointment ${appt._id} status from PENDING to CONFIRMED`);
+          console.log(
+            `Updating appointment ${appt._id} status from PENDING to CONFIRMED`
+          );
           return { ...appt, status: "CONFIRMED" };
         }
       }
@@ -52,25 +57,25 @@ const MyAppointmentsPage = () => {
   };
 
   useEffect(() => {
-  const fetchAndUpdateAppointments = async () => {
-    try {
-      await updatePastPendingAppointments();
+    const fetchAndUpdateAppointments = async () => {
+      try {
+        await updatePastPendingAppointments();
 
-      const data = await getUserAppointments();
+        const data = await getUserAppointments();
 
-      const updatedAppointments = updateStatuses(data);
-      setAppointments(updatedAppointments);
-      setError(null);
-    } catch (error) {
-      console.error("Failed to fetch appointments or update statuses", error);
-      setError("Failed to fetch appointments or update statuses");
-    } finally {
-      setLoading(false);
-    }
-  };
+        const updatedAppointments = updateStatuses(data);
+        setAppointments(updatedAppointments);
+        setError(null);
+      } catch (error) {
+        console.error("Failed to fetch appointments or update statuses", error);
+        setError("Failed to fetch appointments or update statuses");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  fetchAndUpdateAppointments();
-}, []);
+    fetchAndUpdateAppointments();
+  }, []);
 
   const openCancelDialog = (id: string) => {
     setAppointmentToCancel(id);
@@ -86,7 +91,9 @@ const MyAppointmentsPage = () => {
     if (!appointmentToCancel) return;
     try {
       await cancelAppointment(appointmentToCancel);
-      setAppointments((prev) => prev.filter((appt) => appt._id !== appointmentToCancel));
+      setAppointments((prev) =>
+        prev.filter((appt) => appt._id !== appointmentToCancel)
+      );
       setError(null);
     } catch (err) {
       setError("Failed to cancel appointment");
@@ -125,7 +132,9 @@ const MyAppointmentsPage = () => {
                   <p className="font-semibold text-lg text-sky-600">
                     Dr. {appt.doctor.firstname} {appt.doctor.lastname}
                   </p>
-                  <p className="text-gray-500">{appt.doctor.specialization.name}</p>
+                  <p className="text-gray-500">
+                    {appt.doctor.specialization.name}
+                  </p>
                 </div>
               </div>
 
@@ -147,13 +156,19 @@ const MyAppointmentsPage = () => {
                 </p>
               </div>
 
-              <Button
+              <button
+                className=" rounded-lg bg-[#d32f2f] text-gray-100   font-semibold w-24 h-10 ring shadow-gray-200 text-sm tracking-wide cursor-pointer"
+                onClick={() => openCancelDialog(appt._id)}
+              >
+                CANCEL
+              </button>
+              {/* <Button
                 variant="contained"
                 color="error"
                 onClick={() => openCancelDialog(appt._id)}
               >
                 Cancel
-              </Button>
+              </Button> */}
             </div>
           ))}
         </div>
@@ -163,7 +178,8 @@ const MyAppointmentsPage = () => {
         <DialogTitle>Cancel Appointment</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to cancel this appointment? This action cannot be undone.
+            Are you sure you want to cancel this appointment? This action cannot
+            be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
