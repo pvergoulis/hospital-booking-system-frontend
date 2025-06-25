@@ -187,6 +187,7 @@ const AdminDoctorPage = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
 
+
       <Box sx={{ overflowX: "auto" }}>
         <Box sx={{ minWidth: 1500 }}>
           <DataGrid
