@@ -2,7 +2,6 @@ import axios from "axios";
 import {
   type AppointmentRequest,
   type AppointmentType,
-  type AppointmentDoctorType,
 } from "../types/appointmentTypes";
 
 const API_URL = "http://localhost:3000/api/appointments";
