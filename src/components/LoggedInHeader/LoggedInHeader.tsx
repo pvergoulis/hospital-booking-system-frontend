@@ -15,12 +15,6 @@ const LoggedInHeader = () => {
 
   const [role, setRole] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   const decoded = jwtDecode<DecodedToken>(token!);
-  //   setRole(decoded.role);
-  // }, []);
   useEffect(() => {
   const token = localStorage.getItem("token");
 
