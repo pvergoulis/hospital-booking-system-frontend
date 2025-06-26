@@ -28,8 +28,7 @@ Patient	mairh	12345
 
 
 # 1. Clone the repository
-git clone https://github.com/your-username/hospital-management.git
-cd hospital-management
+git clone 
 
 # 2. Install dependencies
 npm install
@@ -84,6 +83,9 @@ Non-authenticated users cannot access protected pages and are redirected to /log
 
 ### 🔐 Welcome Page
 ![Welcome](public/screenshots/welcome.png)
+
+### 📅 Book Appointments
+![Book Appointment](public/screenshots/bookAppointment.png)
 
 ### 🏠 Admin Dashboard
 ![Admin Dashboard](public/screenshots/adminDashboard.png)
