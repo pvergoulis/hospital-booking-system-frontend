@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { usePasswordToggle } from "../hooks/usePasswordToggle";
 import { loginUser } from "../services/authApi";
-
+import { useAuth } from "../context/AuthContext";
 
 const initialValues = {
   username: "",
@@ -23,6 +23,7 @@ const initialValues = {
 };
 
 const LoginPage = () => {
+  const { login } = useAuth();
   useEffect(() => {
     document.title = "Parvathy Hospital | Login Page";
   }, []);
@@ -49,8 +50,8 @@ const LoginPage = () => {
   const onSubmit = async (data: userLoginType) => {
     try {
       const token = await loginUser(data);
-      localStorage.setItem("token", token);
-
+      // localStorage.setItem("token", token);
+      login(token);
       navigate("/welcome");
       reset();
     } catch (err) {

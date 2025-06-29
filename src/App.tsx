@@ -21,134 +21,137 @@ import NoPermissionPage from "./pages/NoPermissionPage";
 import RequireAdmin from "./components/RequireAdminComponent/RequireAdmin";
 import NotFoundPage from "./pages/NotFoundPage";
 import RequireAuth from "./components/RequireAuthComponent/RequireAuth";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          {/*  Public Routes */}
-          <Route element={<BeforeLoginLayout />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Route>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/*  Public Routes */}
+            <Route element={<BeforeLoginLayout />}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Route>
 
-          {/*  Authenticated Layout */}
-          <Route element={<DashboardLayout />}>
-            <Route
-              path="/welcome"
-              element={
-                <RequireAuth>
-                  <WelcomePage />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/doctors"
-              element={
-                <RequireAuth>
-                  <DoctorPage />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/doctors/:lastname"
-              element={
-                <RequireAuth>
-                  <DoctorDetailsPage />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/myAppointments"
-              element={
-                <RequireAuth>
-                  <MyAppointmentsPage />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <RequireAuth>
-                  <AboutPage />
-                </RequireAuth>
-              }
-            />
+            {/*  Authenticated Layout */}
+            <Route element={<DashboardLayout />}>
+              <Route
+                path="/welcome"
+                element={
+                  <RequireAuth>
+                    <WelcomePage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/doctors"
+                element={
+                  <RequireAuth>
+                    <DoctorPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/doctors/:lastname"
+                element={
+                  <RequireAuth>
+                    <DoctorDetailsPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/myAppointments"
+                element={
+                  <RequireAuth>
+                    <MyAppointmentsPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/about"
+                element={
+                  <RequireAuth>
+                    <AboutPage />
+                  </RequireAuth>
+                }
+              />
 
-            {/*  Route for non-admin access */}
-            <Route path="/no-permission" element={<NoPermissionPage />} />
+              {/*  Route for non-admin access */}
+              <Route path="/no-permission" element={<NoPermissionPage />} />
 
-            {/*  Admin Protected Routes */}
-            <Route
-              path="/admin"
-              element={
-                <RequireAdmin>
-                  <AdminHomePage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/doctor-admin"
-              element={
-                <RequireAdmin>
-                  <AdminDoctorPage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/doctors/edit/:lastname"
-              element={
-                <RequireAdmin>
-                  <AdminDoctorEditPage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/doctor-create"
-              element={
-                <RequireAdmin>
-                  <AdminDoctorCreatePage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/doctor/appointments/:doctorId"
-              element={
-                <RequireAdmin>
-                  <AdminDoctorAppointmentsPage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/admin-user"
-              element={
-                <RequireAdmin>
-                  <AdminUserPage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/update-user/:username"
-              element={
-                <RequireAdmin>
-                  <AdminUserUpdatePage />
-                </RequireAdmin>
-              }
-            />
-            <Route
-              path="/admin-appointments"
-              element={
-                <RequireAdmin>
-                  <AdminAppointmentPage />
-                </RequireAdmin>
-              }
-            />
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+              {/*  Admin Protected Routes */}
+              <Route
+                path="/admin"
+                element={
+                  <RequireAdmin>
+                    <AdminHomePage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/doctor-admin"
+                element={
+                  <RequireAdmin>
+                    <AdminDoctorPage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/doctors/edit/:lastname"
+                element={
+                  <RequireAdmin>
+                    <AdminDoctorEditPage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/doctor-create"
+                element={
+                  <RequireAdmin>
+                    <AdminDoctorCreatePage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/doctor/appointments/:doctorId"
+                element={
+                  <RequireAdmin>
+                    <AdminDoctorAppointmentsPage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/admin-user"
+                element={
+                  <RequireAdmin>
+                    <AdminUserPage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/update-user/:username"
+                element={
+                  <RequireAdmin>
+                    <AdminUserUpdatePage />
+                  </RequireAdmin>
+                }
+              />
+              <Route
+                path="/admin-appointments"
+                element={
+                  <RequireAdmin>
+                    <AdminAppointmentPage />
+                  </RequireAdmin>
+                }
+              />
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }

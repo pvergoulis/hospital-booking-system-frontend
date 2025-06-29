@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import {type DecodedToken } from "../types/jwtTypes";
+import { type DecodedToken } from "../types/jwtTypes";
+import { getToken, setToken, removeToken } from "../utils/authTokenUtils";
 
 interface AuthContextType {
   token: string | null;
@@ -16,17 +17,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
- 
-
+  const [loading, setLoading] = useState(true); //
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
+    const token = getToken();
+    if (token) {
       try {
-        const decoded = jwtDecode<DecodedToken>(storedToken);
-        setToken(storedToken);
+        const decoded = jwtDecode<DecodedToken>(token);
+        setToken(token);
         setRole(decoded.role);
-        setUserId(decoded.id); 
+        setUserId(decoded.id);
       } catch (err) {
         console.error("Invalid token", err);
         setToken(null);
@@ -34,22 +34,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserId(null);
       }
     }
-   
+    setLoading(false);
   }, []);
 
-  
   const login = (token: string) => {
-  localStorage.setItem("token", token);
-  const decoded = jwtDecode<DecodedToken>(token);
-  setToken(token);
-  setRole(decoded.role);
-  setUserId(decoded.id);
-};
+    setToken(token);
+    const decoded = jwtDecode<DecodedToken>(token);
+    setToken(token);
+    setRole(decoded.role);
+    setUserId(decoded.id);
+  };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("username");
+    removeToken()
     setToken(null);
     setRole(null);
     setUserId(null);
@@ -57,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider value={{ token, role, userId, login, logout }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
