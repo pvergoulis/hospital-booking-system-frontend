@@ -1,14 +1,16 @@
 import axios from "axios";
+import { getToken } from "../utils/authTokenUtils";
 
 export type clinicType = {
     _id : string,
     name : string
 }
+
 const API_URL = "http://localhost:3000/api/clinics"
 
 
 export const getAllClinics = async () : Promise<clinicType[]> =>{
-    const token = localStorage.getItem("token");
+    const token = getToken() 
 
     const res = await axios.get<{ status: boolean; data: clinicType[] }>(
     `${API_URL}`, {

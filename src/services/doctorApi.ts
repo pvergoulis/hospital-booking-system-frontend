@@ -1,10 +1,11 @@
 import { type doctorType, type doctorTypeCard , type doctorCreateType} from "../types/doctorTypes";
 import axios from "axios";
+import { getToken } from "../utils/authTokenUtils";
 
 const API_URL = "http://localhost:3000/api/doctors";
 
 export const getFirstEightDoctors = async (): Promise<doctorTypeCard[]> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.get<{ status: boolean; data: doctorTypeCard[] }>(
     `${API_URL}/EightDoctors`,
@@ -21,7 +22,7 @@ export const getFirstEightDoctors = async (): Promise<doctorTypeCard[]> => {
 };
 
 export const getAllDoctors = async (): Promise<doctorTypeCard[]> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.get<{ status: boolean; data: doctorTypeCard[] }>(
     `${API_URL}`,
@@ -39,7 +40,7 @@ export const getAllDoctors = async (): Promise<doctorTypeCard[]> => {
 export const getDoctorByLastname = async (
   lastname: string
 ): Promise<doctorType> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   try {
     const res = await axios.get<{
@@ -93,7 +94,7 @@ export const updateDoctorById = async (
 export const createDoctor = async (
   newDoctor: doctorCreateType
 ): Promise<doctorCreateType> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.post<doctorCreateType>(`${API_URL}/create`, newDoctor,{
     headers: {
@@ -107,7 +108,7 @@ export const createDoctor = async (
 
 
 export const deleteDoctorById = async (id: string): Promise<doctorType> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.delete<{ status: boolean; data: doctorType }>(
     `${API_URL}/delete/${id}`,

@@ -1,6 +1,6 @@
 import {type userType, type userUpdateType } from "../types/userTypes"
 import axios from "axios";
-
+import { getToken } from "../utils/authTokenUtils";
 
 const API_URL = "http://localhost:3000/api/users"
 
@@ -23,7 +23,7 @@ export const getAllUsers = async():Promise<userType[]> =>{
 }
 
 export const deleteUserById = async (id: string) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.delete(`${API_URL}/delete/${id}`, {
     headers: {
@@ -35,7 +35,7 @@ export const deleteUserById = async (id: string) => {
 };
 
 export const getUserByUsername = async (username: string): Promise<userType> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
   const res = await axios.get(`${API_URL}/${username}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -44,7 +44,7 @@ export const getUserByUsername = async (username: string): Promise<userType> => 
 
 
 export const updateUser = async (username: string, updatedUser: userUpdateType) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.patch(`${API_URL}/update/${username}`, updatedUser, {
     headers: {

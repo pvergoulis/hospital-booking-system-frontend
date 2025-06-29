@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../utils/authTokenUtils";
 
 export type specializationType = {
     _id : string,
@@ -8,7 +9,7 @@ export type specializationType = {
 const API_URL = "http://localhost:3000/api/categories"
 
 export const getAllSpecialization = async () : Promise<specializationType[]> =>{
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     const res = await axios.get<{ status: boolean; data: specializationType[] }>(
     `${API_URL}`, {
