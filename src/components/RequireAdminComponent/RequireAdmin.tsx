@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { type DecodedToken } from "../../types/jwtTypes";
 
 const RequireAdmin = ({ children }: { children: React.ReactNode }) => {
+  
   const token = localStorage.getItem("token");
 
   if (!token) {
