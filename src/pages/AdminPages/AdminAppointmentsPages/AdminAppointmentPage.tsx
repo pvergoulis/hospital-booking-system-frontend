@@ -1,10 +1,19 @@
 import { getAllAppointments } from "../../../services/appointmentApi";
 import { useEffect, useState } from "react";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  type GridColDef,
+  type GridPaginationModel,
+} from "@mui/x-data-grid";
 import { type AppointmentDoctorType } from "../../../types/appointmentTypes";
 
 const AdminAppointmentPage = () => {
   const [appointments, setAppointments] = useState<AppointmentDoctorType[]>([]);
+
+  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
+    page: 0,
+    pageSize: 8,
+  });
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -23,7 +32,6 @@ const AdminAppointmentPage = () => {
               appt.user?.firstname && appt.user?.lastname
                 ? `${appt.user.firstname} ${appt.user.lastname}`.trim()
                 : "N/A",
-           
           }))
         );
 
@@ -47,7 +55,6 @@ const AdminAppointmentPage = () => {
     // Doctor full name
     { field: "doctorName", headerName: "Doctor", flex: 1 },
     { field: "userName", headerName: "User", flex: 1 },
-    
   ];
   return (
     <>
@@ -56,8 +63,10 @@ const AdminAppointmentPage = () => {
           rows={appointments}
           columns={columns}
           getRowId={(row) => row._id}
-          paginationModel={{ page: 0, pageSize: 8 }}
-          onPaginationModelChange={() => {}}
+          paginationModel={paginationModel} 
+          onPaginationModelChange={(newModel) => setPaginationModel(newModel)} 
+          pageSizeOptions={[5, 8, 10, 20]}
+          pagination
         />
       </div>
     </>
