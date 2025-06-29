@@ -4,11 +4,12 @@ import {
   type AppointmentType,
  type AppointmentDoctorType
 } from "../types/appointmentTypes";
+import { getToken } from "../utils/authTokenUtils";
 
 const API_URL = "http://localhost:3000/api/appointments";
 
 export const bookAppointment = async (data: AppointmentRequest) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.post(`${API_URL}/book`, data, {
     headers: {
@@ -20,7 +21,7 @@ export const bookAppointment = async (data: AppointmentRequest) => {
 };
 
 export const getUserAppointments = async (): Promise<AppointmentType[]> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.get(`${API_URL}/user`, {
     headers: {
@@ -32,7 +33,7 @@ export const getUserAppointments = async (): Promise<AppointmentType[]> => {
 };
 
 export const cancelAppointment = async (id: string) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.delete(`${API_URL}/cancel/${id}`, {
     headers: {
@@ -46,7 +47,7 @@ export const cancelAppointment = async (id: string) => {
 export const getBookedAppointmentsForDoctor = async (
   doctorId: string
 ): Promise<AppointmentType[]> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.get<{
     status: boolean;
@@ -63,7 +64,7 @@ export const getBookedAppointmentsForDoctor = async (
 };
 
 export const updatePastPendingAppointments = async () => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.patch(
     `${API_URL}/update-past-pending`,
@@ -80,7 +81,7 @@ export const updatePastPendingAppointments = async () => {
 };
 
 export const getAppointmentsByDoctor = async (doctorId: string) => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
 
   const res = await axios.get(`${API_URL}/doctor/${doctorId}`, {
     headers: {
@@ -97,7 +98,7 @@ export const getAppointmentsByDoctor = async (doctorId: string) => {
 
 
 export const getAllAppointments = async (): Promise<AppointmentDoctorType[]> => {
-  const token = localStorage.getItem("token");
+  const token = getToken();
   console.log("Token used in getAllAppointments:", token);
 
   if (!token) {
