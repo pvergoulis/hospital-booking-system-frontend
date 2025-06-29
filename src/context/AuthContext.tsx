@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { type DecodedToken } from "../types/jwtTypes";
-import { getToken, setToken, removeToken } from "../utils/authTokenUtils";
+import { getToken, setToken as saveToken, removeToken } from "../utils/authTokenUtils";
 
 interface AuthContextType {
   token: string | null;
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = (token: string) => {
-    setToken(token);
+    saveToken(token);
     const decoded = jwtDecode<DecodedToken>(token);
     setToken(token);
     setRole(decoded.role);
