@@ -50,7 +50,6 @@ const LoginPage = () => {
   const onSubmit = async (data: userLoginType) => {
     try {
       const token = await loginUser(data);
-      // localStorage.setItem("token", token);
       login(token);
       navigate("/welcome");
       reset();
