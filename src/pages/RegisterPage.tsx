@@ -1,6 +1,6 @@
 import { Container, Typography, Button, TextField } from "@mui/material";
 import StepperWizzard from "../components/Stepper/StepperWizzard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema, type userType } from "../types/userTypes";
