@@ -19,12 +19,13 @@ A modern hospital management web application built with React, TailwindCSS, and 
 
 👮‍♂️ Full client-side route protection based on user role
 
-# 🧪 Demo Credentials
+## 🧪 Demo Credentials
 You can try logging in with the following test accounts:
 
-Role	Username	Password
-Admin	vergoulis	12345
-Patient	mairh	12345
+| Role   | Username  | Password |
+|--------|-----------|----------|
+| Admin  | vergoulis | 12345    |
+| Patient| mairh     | 12345    |
 
 
 # 1. Clone the repository
