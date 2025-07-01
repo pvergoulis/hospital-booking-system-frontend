@@ -11,7 +11,7 @@ import { registerUser } from "../services/userApi";
 import { useNavigate } from "react-router";
 import { useRegisterStepValidation } from "../hooks/useRegisterStepValidation";
 import { useStepper } from "../hooks/useStepper";
-
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   useEffect(() => {
@@ -39,8 +39,8 @@ const RegisterPage = () => {
   const { step, nextStep, prevStep } = useStepper(2);
   const { showPassword, togglePassword } = usePasswordToggle();
 
-  const [registerMessage, setRegisterMessage] = useState<string | null>(null);
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+  // const [registerMessage, setRegisterMessage] = useState<string | null>(null);
+  // const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
 
   const navigate = useNavigate()
@@ -49,16 +49,18 @@ const RegisterPage = () => {
     console.log("Submitted data", data);
     try {
       await registerUser(data);
-      setRegisterMessage(" Success Registration");
-      setIsSuccess(true);
+      // setRegisterMessage(" Success Registration");
+      // setIsSuccess(true);
+      toast.success(" Success Registration")
       console.log("User registered successfully:");
       setTimeout(() => {
         navigate("/login");
       }, 2500);
     } catch (error) {
       console.log("Error in creating new user", error);
-      setRegisterMessage(" Failed in creating new user");
-      setIsSuccess(false);
+      // setRegisterMessage(" Failed in creating new user");
+      // setIsSuccess(false);
+      toast.error("Failed in creating new user")
     }
   };
 
@@ -66,7 +68,7 @@ const RegisterPage = () => {
     <>
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
         <StepperWizzard step={step} />
-        {registerMessage && (
+        {/* {registerMessage && (
           <Typography
             sx={{
               textAlign: "center",
@@ -77,7 +79,7 @@ const RegisterPage = () => {
           >
             {registerMessage}
           </Typography>
-        )}
+        )} */}
         <Typography
           component="h1"
           sx={{

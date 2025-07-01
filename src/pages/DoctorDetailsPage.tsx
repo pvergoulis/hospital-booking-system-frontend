@@ -8,6 +8,7 @@ import {
 } from "../services/appointmentApi";
 import { Typography } from "@mui/material";
 import { getDoctorByLastname } from "../services/doctorApi";
+import { toast } from "react-toastify";
 
 type AppointmentSlot = {
   date: string;
@@ -19,7 +20,6 @@ const DoctorDetailsPage = () => {
   const [doctor, setDoctor] = useState<doctorType | null>(null);
   const [date, setDate] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
-  const [success, setSuccess] = useState("");
   const [bookedSlots, setBookedSlots] = useState<AppointmentSlot[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,6 @@ const DoctorDetailsPage = () => {
     const fetchDoctorAndAppointments = async () => {
       try {
         setError(null);
-        setSuccess("");
 
         if (!lastname) throw new Error("No lastname provided");
 
@@ -64,7 +63,8 @@ const DoctorDetailsPage = () => {
         date,
         timeSlot,
       });
-      setSuccess("Appointment booked successfully!");
+      
+      toast.success(`Appointment with doctor ${doctor.firstname} - ${doctor.lastname} booked successfully!`)
       setDate("");
       setTimeSlot("");
 
@@ -72,6 +72,7 @@ const DoctorDetailsPage = () => {
       setBookedSlots((prev) => [...prev, { date, timeSlot }]);
     } catch (err) {
       console.error("Booking failed", err);
+      toast.error('Erroing in booking an appointment')
       setError(err instanceof Error ? err.message : "Booking failed");
     }
   };
@@ -151,7 +152,7 @@ const DoctorDetailsPage = () => {
           Confirm Appointment
         </button>
 
-        {success && <p className="text-green-600 text-center">{success}</p>}
+        
         {error && <p className="text-red-600 text-center">{error}</p>}
       </div>
     </div>

@@ -17,12 +17,12 @@ import { getUserByUsername, updateUser } from "../../../services/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type userUpdateType, updatedUserSchema } from "../../../types/userTypes";
+import { toast } from "react-toastify";
 
 const UpdateUserPage = () => {
   const { username } = useParams<{ username: string }>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [success, setSuccess] = useState(false);
 
   const {
     register,
@@ -35,6 +35,7 @@ const UpdateUserPage = () => {
   });
 
   useEffect(() => {
+    document.title = "Parvathy Hospital | Update User Page";
     const fetchUser = async () => {
       try {
         if (!username) return;
@@ -56,13 +57,13 @@ const UpdateUserPage = () => {
       await updateUser(username!, data);
       console.log("🧪 SUBMITTING DATA:", data);
 
-      setSuccess(true);
+      toast.success(`User ${data.username} is updated!`)
       setTimeout(() => {
         navigate("/admin-user");
       }, 2000);
     } catch (err) {
       console.error("Update failed:", err);
-      alert("Update failed. Check console for details.")
+      toast.error(`Error in updating User ${data.username} `)
     }
   };
 
@@ -84,11 +85,6 @@ const UpdateUserPage = () => {
         Edit User
       </Typography>
 
-      {success && (
-        <Typography variant="h6" className="text-green-500 text-center mb-4">
-          User updated successfully!
-        </Typography>
-      )}
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Box display="flex" flexDirection="column" gap={2}>
