@@ -156,19 +156,14 @@ const MyAppointmentsPage = () => {
                 </p>
               </div>
 
-              <button
-                className=" rounded-lg bg-[#d32f2f] text-gray-100   font-semibold w-24 h-10 ring shadow-gray-200 text-sm tracking-wide cursor-pointer"
-                onClick={() => openCancelDialog(appt._id)}
-              >
-                CANCEL
-              </button>
-              {/* <Button
+            
+              <Button
                 variant="contained"
                 color="error"
                 onClick={() => openCancelDialog(appt._id)}
               >
                 Cancel
-              </Button> */}
+              </Button>
             </div>
           ))}
         </div>
