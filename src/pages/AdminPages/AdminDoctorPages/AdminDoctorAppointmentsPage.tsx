@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useParams } from "react-router";
 import {
   Box,
@@ -31,6 +32,7 @@ const AdminDoctorAppointmentsPage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    document.title = "Parvathy Hospital |  Doctor Appointments Page";
     const fetchAppointments = async () => {
       if (!doctorId) return;
 
@@ -66,8 +68,10 @@ const AdminDoctorAppointmentsPage = () => {
           appt._id === id ? { ...appt, status: updated.status } : appt
         )
       );
+      toast.success(`Status updated to ${updated.status}`);
     } catch (err) {
       console.error("Failed to update status:", err);
+       toast.error("Failed to update appointment status");
     }
   };
 

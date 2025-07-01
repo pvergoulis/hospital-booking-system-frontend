@@ -22,12 +22,15 @@ import RequireAdmin from "./components/RequireAdminComponent/RequireAdmin";
 import NotFoundPage from "./pages/NotFoundPage";
 import RequireAuth from "./components/RequireAuthComponent/RequireAuth";
 import { AuthProvider } from "./context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
       <AuthProvider>
         <BrowserRouter>
+        <ToastContainer position="top-right" autoClose={3000} />
           <Routes>
             {/*  Public Routes */}
             <Route element={<BeforeLoginLayout />}>

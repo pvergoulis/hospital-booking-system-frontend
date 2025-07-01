@@ -11,6 +11,7 @@ import {
   FormControl,
   FormHelperText,
 } from "@mui/material";
+import { toast } from "react-toastify";
 import { useStepper } from "../../../hooks/useStepper";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,10 +25,8 @@ import { useDoctorStepValidation } from "../../../hooks/useDoctorStepValidation"
 import { useNavigate } from "react-router";
 
 const AdminDoctorCreatePage = () => {
-  const [registerMessage, setRegisterMessage] = useState<string | null>(null);
   const { step, nextStep, prevStep } = useStepper(2);
 
-  const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
   const [specializations, setSpecializations] = useState<specializationType[]>(
     []
   );
@@ -76,16 +75,15 @@ const AdminDoctorCreatePage = () => {
       console.log("Submitted data", data);
       try {
         await createDoctor(data);
-        setRegisterMessage(" Success Registration");
-        setIsSuccess(true);
+         toast.success("Doctor registered successfully!");
+ 
         console.log("Doctor registered successfully:");
         setTimeout(()=>{
           navigate("/doctor-admin")
         },2000)
       } catch (error) {
         console.log("Error in creating new doctor", error);
-        setRegisterMessage(" Failed in creating new Doctor");
-        setIsSuccess(false);
+        toast.error("Failed to create doctor. Please try again.");
       }
     };
 
@@ -94,18 +92,6 @@ const AdminDoctorCreatePage = () => {
       
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
         <StepperWizzard step={step} />
-        {registerMessage && (
-          <Typography
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              color: isSuccess ? "green" : "red",
-              fontSize: "1.2rem",
-            }}
-          >
-            {registerMessage}
-          </Typography>
-        )}
         <Typography
           component="h1"
           sx={{

@@ -24,6 +24,7 @@ import { getAllClinics } from "../../../services/clinicsApi";
 import { doctorSchema, type doctorType } from "../../../types/doctorTypes";
 import { type specializationType } from "../../../services/specializationApi";
 import { type clinicType } from "../../../services/clinicsApi";
+import { toast } from "react-toastify";
 
 const AdminDoctorEditPage = () => {
   const { lastname } = useParams<{ lastname: string }>();
@@ -34,7 +35,7 @@ const AdminDoctorEditPage = () => {
   );
   const [clinics, setClinics] = useState<clinicType[]>([]);
   const [loadingData, setLoadingData] = useState(true);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   const {
     register,
@@ -92,11 +93,12 @@ const AdminDoctorEditPage = () => {
         clinic: data.clinic,
       };
       await updateDoctorById(data._id, payload);
-      setSuccess(true);
+      toast.success(`Doctor ${data.firstname} - ${data.lastname} updated!`)
       setTimeout(() => {
         navigate("/doctor-admin");
       }, 2000);
     } catch (err) {
+      toast.error(`Error in updating Doctor ${data.firstname} - ${data.lastname}`)
       console.error("Update failed:", err);
     }
   };
@@ -121,7 +123,7 @@ const AdminDoctorEditPage = () => {
         Edit Doctor
       </Typography>
 
-      {success && (
+      {/* {success && (
         <Typography
           variant="h5"
           mt={4}
@@ -131,7 +133,7 @@ const AdminDoctorEditPage = () => {
         >
           Success Update
         </Typography>
-      )}
+      )} */}
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextField
