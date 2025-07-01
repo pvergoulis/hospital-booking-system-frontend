@@ -123,3 +123,22 @@ export const getAllAppointments = async (): Promise<AppointmentDoctorType[]> => 
     throw error;
   }
 };
+
+export const updateAppointmentStatus = async (
+  appointmentId: string,
+  status: string
+) => {
+  const token = getToken();
+
+  const res = await axios.patch(
+    `${API_URL}/${appointmentId}/status`,
+    { status },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return res.data.appointment;
+};

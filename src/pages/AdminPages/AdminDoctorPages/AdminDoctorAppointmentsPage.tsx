@@ -1,9 +1,28 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Box, Typography, CircularProgress, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Alert,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import { getAppointmentsByDoctor } from "../../../services/appointmentApi";
+import {
+  getAppointmentsByDoctor,
+  updateAppointmentStatus,
+} from "../../../services/appointmentApi";
 import { type AppointmentDoctorType } from "../../../types/appointmentTypes";
+
+const statusOptions = [
+  "PENDING",
+  "CONFIRMED",
+  "CANCELED",
+  "REJECTED",
+  "ACCEPTED",
+  "DONE",
+];
 
 const AdminDoctorAppointmentsPage = () => {
   const { doctorId } = useParams();
@@ -39,25 +58,51 @@ const AdminDoctorAppointmentsPage = () => {
     fetchAppointments();
   }, [doctorId]);
 
+  const handleStatusChange = async (id: string, newStatus: string) => {
+    try {
+      const updated = await updateAppointmentStatus(id, newStatus);
+      setAppointments((prev) =>
+        prev.map((appt) =>
+          appt._id === id ? { ...appt, status: updated.status } : appt
+        )
+      );
+    } catch (err) {
+      console.error("Failed to update status:", err);
+    }
+  };
+
   const columns: GridColDef[] = [
     { field: "_id", headerName: "ID", flex: 1 },
     { field: "doctorName", headerName: "Doctor", flex: 1 },
-    {
-      field: "date",
-      headerName: "Date",
-      flex: 1,
-    },
+    { field: "date", headerName: "Date", flex: 1 },
     { field: "timeSlot", headerName: "Time Slot", flex: 1 },
-    { field: "status", headerName: "Status", flex: 1 },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+      renderCell: (params) => (
+        <Select
+          value={params.row.status}
+          onChange={(e) =>
+            handleStatusChange(params.row._id, e.target.value as string)
+          }
+          size="small"
+          fullWidth
+        >
+          {statusOptions.map((status) => (
+            <MenuItem key={status} value={status}>
+              {status}
+            </MenuItem>
+          ))}
+        </Select>
+      ),
+    },
     { field: "patientName", headerName: "Patient", flex: 1 },
   ];
 
-  const docName =
-    appointments.find((app) => app.doctor.firstname)?.doctor.firstname ??
-    "Unknown Doctor";
-  const docLastname =
-    appointments.find((app) => app.doctor.lastname)?.doctor.lastname ??
-    "Unknown Doctor";
+  const doctor = appointments[0]?.doctor;
+  const docName = doctor?.firstname ?? "Unknown";
+  const docLastname = doctor?.lastname ?? "";
 
   return (
     <Box sx={{ padding: "3rem", height: "60vh" }}>
@@ -67,14 +112,16 @@ const AdminDoctorAppointmentsPage = () => {
         color="primary"
         sx={{ textAlign: "center", marginY: "1.5rem" }}
       >
-        Appointments for Doctor ID:
+        Appointments for:
         <span className="text-2xl font-bold ps-2">
-          {docName} - {docLastname}
+          {docName} {docLastname}
         </span>
       </Typography>
 
       {loading ? (
-        <CircularProgress />
+        <Box display="flex" justifyContent="center" mt={4}>
+          <CircularProgress />
+        </Box>
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : (
@@ -95,3 +142,4 @@ const AdminDoctorAppointmentsPage = () => {
 };
 
 export default AdminDoctorAppointmentsPage;
+
