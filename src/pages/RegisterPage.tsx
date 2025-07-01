@@ -39,9 +39,6 @@ const RegisterPage = () => {
   const { step, nextStep, prevStep } = useStepper(2);
   const { showPassword, togglePassword } = usePasswordToggle();
 
-  // const [registerMessage, setRegisterMessage] = useState<string | null>(null);
-  // const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-
 
   const navigate = useNavigate()
 
@@ -49,8 +46,6 @@ const RegisterPage = () => {
     console.log("Submitted data", data);
     try {
       await registerUser(data);
-      // setRegisterMessage(" Success Registration");
-      // setIsSuccess(true);
       toast.success(" Success Registration")
       console.log("User registered successfully:");
       setTimeout(() => {
@@ -58,8 +53,6 @@ const RegisterPage = () => {
       }, 2500);
     } catch (error) {
       console.log("Error in creating new user", error);
-      // setRegisterMessage(" Failed in creating new user");
-      // setIsSuccess(false);
       toast.error("Failed in creating new user")
     }
   };
@@ -68,18 +61,6 @@ const RegisterPage = () => {
     <>
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
         <StepperWizzard step={step} />
-        {/* {registerMessage && (
-          <Typography
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              color: isSuccess ? "green" : "red",
-              fontSize: "1.2rem",
-            }}
-          >
-            {registerMessage}
-          </Typography>
-        )} */}
         <Typography
           component="h1"
           sx={{
