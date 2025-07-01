@@ -35,7 +35,6 @@ const AdminDoctorEditPage = () => {
   );
   const [clinics, setClinics] = useState<clinicType[]>([]);
   const [loadingData, setLoadingData] = useState(true);
-  // const [success, setSuccess] = useState(false);
 
   const {
     register,
@@ -122,18 +121,6 @@ const AdminDoctorEditPage = () => {
       >
         Edit Doctor
       </Typography>
-
-      {/* {success && (
-        <Typography
-          variant="h5"
-          mt={4}
-          gutterBottom
-          sx={{ fontWeight: "bold" }}
-          className="text-green-400 text-center"
-        >
-          Success Update
-        </Typography>
-      )} */}
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextField
