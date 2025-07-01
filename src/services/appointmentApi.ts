@@ -6,7 +6,8 @@ import {
 } from "../types/appointmentTypes";
 import { getToken } from "../utils/authTokenUtils";
 
-const API_URL = "http://localhost:3000/api/appointments";
+const API_URL: string = `${import.meta.env.VITE_API_URL}/api/appointments`;
+
 
 export const bookAppointment = async (data: AppointmentRequest) => {
   const token = getToken();

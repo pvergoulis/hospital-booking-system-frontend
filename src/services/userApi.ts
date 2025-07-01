@@ -2,8 +2,8 @@ import {type userType, type userUpdateType } from "../types/userTypes"
 import axios from "axios";
 import { getToken } from "../utils/authTokenUtils";
 
-const API_URL = "http://localhost:3000/api/users"
 
+const API_URL: string = `${import.meta.env.VITE_API_URL}/api/users`;
 
 export const registerUser = async(newUser: userType): Promise<userType> =>{
 

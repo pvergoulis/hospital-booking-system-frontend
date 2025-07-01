@@ -6,7 +6,8 @@ export type specializationType = {
     name : string
 }
 
-const API_URL = "http://localhost:3000/api/categories"
+const API_URL: string = `${import.meta.env.VITE_API_URL}/api/categories`;
+
 
 export const getAllSpecialization = async () : Promise<specializationType[]> =>{
     const token = getToken();

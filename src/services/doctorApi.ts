@@ -2,7 +2,9 @@ import { type doctorType, type doctorTypeCard , type doctorCreateType} from "../
 import axios from "axios";
 import { getToken } from "../utils/authTokenUtils";
 
-const API_URL = "http://localhost:3000/api/doctors";
+
+
+const API_URL: string = `${import.meta.env.VITE_API_URL}/api/doctors`;
 
 export const getFirstEightDoctors = async (): Promise<doctorTypeCard[]> => {
   const token = getToken();

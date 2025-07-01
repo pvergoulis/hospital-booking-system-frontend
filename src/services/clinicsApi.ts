@@ -6,7 +6,8 @@ export type clinicType = {
     name : string
 }
 
-const API_URL = "http://localhost:3000/api/clinics"
+const API_URL: string = `${import.meta.env.VITE_API_URL}/api/clinics`;
+
 
 
 export const getAllClinics = async () : Promise<clinicType[]> =>{
