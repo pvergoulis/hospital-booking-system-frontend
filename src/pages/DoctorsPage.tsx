@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { getAllDoctors } from "../services/doctorApi";
 import { type doctorTypeCard } from "../types/doctorTypes";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 
 const DoctorPage = () => {
@@ -14,11 +14,6 @@ const DoctorPage = () => {
   });
 
   const navigate = useNavigate();
-
-  const handleRowClick = (params: any) => {
-    const lastname = params.row.lastname;
-    navigate(`/doctors/${lastname}`);
-  };
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -52,32 +47,34 @@ const DoctorPage = () => {
       headerName: "Specialization",
       flex: 1,
       sortable: true,
-      renderCell: (params) => {
-        const spec = params.value;
-        if (!spec || typeof spec !== "object") return "—";
-        return spec.name || "—";
-      },
-      sortComparator: (v1, v2) => {
-        const name1 = v1?.name?.toLowerCase() || "";
-        const name2 = v2?.name?.toLowerCase() || "";
-        return name1.localeCompare(name2);
-      },
+      renderCell: (params) => params.value?.name || "—",
+      sortComparator: (v1, v2) =>
+        (v1?.name || "").toLowerCase().localeCompare((v2?.name || "").toLowerCase()),
     },
     {
       field: "clinic",
       headerName: "Clinic",
       flex: 1,
       sortable: true,
-      renderCell: (params) => {
-        const clinic = params.value;
-        if (!clinic || typeof clinic !== "object") return "—";
-        return clinic.name || "—";
-      },
-      sortComparator: (v1, v2) => {
-        const name1 = v1?.name?.toLowerCase() || "";
-        const name2 = v2?.name?.toLowerCase() || "";
-        return name1.localeCompare(name2);
-      },
+      renderCell: (params) => params.value?.name || "—",
+      sortComparator: (v1, v2) =>
+        (v1?.name || "").toLowerCase().localeCompare((v2?.name || "").toLowerCase()),
+    },
+    {
+      field: "action",
+      headerName: "Book",
+      flex: 0.5,
+      sortable: false,
+      renderCell: (params) => (
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={() => navigate(`/doctors/${params.row.lastname}`)}
+        >
+          Book
+        </Button>
+      ),
     },
   ];
 
@@ -96,7 +93,7 @@ const DoctorPage = () => {
           sx={{ fontSize: "1.2rem", fontWeight: "bold" }}
           className="text-cyan-500"
         >
-          Click on the doctor you need to book an appointment
+          Click on the book button to make an appointment
         </Typography>
       </div>
 
@@ -117,11 +114,13 @@ const DoctorPage = () => {
         onPaginationModelChange={setPaginationModel}
         autoHeight
         disableRowSelectionOnClick
-        onRowClick={handleRowClick}
         sx={{ zIndex: "1000" }}
+        pageSizeOptions={[5, 8, 10, 20]}
+        pagination
       />
     </Box>
   );
 };
 
 export default DoctorPage;
+
