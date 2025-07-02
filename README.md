@@ -26,6 +26,7 @@ You can try logging in with the following test accounts:
 |--------|-----------|----------|
 | Admin  | vergoulis | 12345    |
 | Patient| mairh     | 12345    |
+| Doctor | willy     | 12345    |
 
 
 # 1. Clone the repository
@@ -48,20 +49,27 @@ npm run dev
 | `zod`                             | Schema validation with form integration             |
 | `@mui/material`, `icons`, `grid` | Elegant UI components & data grids                  |
 | `@emotion/react`, `styled`       | MUI styling system                                  |
-| `@fontsource/roboto`             | Roboto font for consistent design                   |
+| `@fontsource/roboto`             | Roboto font for consistent design                    |
 | `axios`                           | API calls and HTTP requests                         |
 | `jwt-decode`                      | Decodes JWT tokens for access control               |
 | `lucide-react`                    | Iconography (clean, sharp React icons)              |
 | `tailwindcss`, `@tailwindcss/vite`| Utility-first CSS styling, integrated with Vite     |
+| `react-big-calendar`               |  Calendar & scheduling UI with customizable views  |
+| `react- toastify`                  | Toast notification for user feedback and alerts    |
 | `vite`                            | Fast dev server and bundler (in devDependencies)    |
 
 
-# 🛡️ Authorization Logic
-Users are redirected based on authentication and role.
 
-Admin users gain access to restricted /admin, /admin-user, and CRUD routes.
+🛡️ Authorization Logic
+Users are redirected based on authentication status and role.
+
+Admin users gain access to restricted routes such as /admin, /admin-user, and all CRUD operations.
+
+Doctor users have their own login and are redirected to a dedicated dashboard. They can view and manage their own appointments
 
 Non-authenticated users cannot access protected pages and are redirected to /login.
+
+This role-based access ensures that each user only interacts with the parts of the system relevant to their responsibilities
 
 
 
@@ -93,6 +101,9 @@ Non-authenticated users cannot access protected pages and are redirected to /log
 
 ### 🧑‍⚕️ Doctors Page
 ![Doctors](public/screenshots/adminDoctors.png)
+
+### 🧑‍⚕️ Doctors Appointments Page
+![Doctors Appointments Page](public/screenshots/DoctorAppointment.png)
 
 ### 🧑‍⚕️ Doctors Create Page
 ![Doctors Create](public/screenshots/createDoctor.png)
