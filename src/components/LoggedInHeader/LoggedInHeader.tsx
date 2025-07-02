@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const LoggedInHeader = () => {
   const navigate = useNavigate();
-  const { role, logout } = useAuth(); 
+  const { role, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
@@ -14,12 +14,12 @@ const LoggedInHeader = () => {
   };
 
   const handleLogout = () => {
-    logout(); 
+    logout();
     navigate("/login");
   };
 
   return (
-    <nav className="flex bg-blue-500 h-24 items-center justify-between p-4 w-full fixed z-[1500]">
+    <nav className="flex bg-blue-500 h-24 items-center justify-between p-4 w-full fixed z-[1500] ">
       <div>
         <NavLink to="/welcome">
           <img src="/logo4.png" alt="logo" className="w-55 text-white" />
@@ -80,19 +80,37 @@ const LoggedInHeader = () => {
             </NavLink>
           </li>
 
-          <li className="mt-2 mb-2 md:mt-0 md:mb-0">
-            <NavLink
-              to="/myAppointments"
-              onClick={handleToggle}
-              className={({ isActive }) =>
-                isActive
-                  ? "underline underline-offset-4 text-white font-bold"
-                  : "text-white"
-              }
-            >
-              My Appointments
-            </NavLink>
-          </li>
+          {role !== "DOCTOR" && (
+            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
+              <NavLink
+                to="/myAppointments"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
+                My Appointments
+              </NavLink>
+            </li>
+          )}
+
+           {role === "DOCTOR" && (
+            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
+              <NavLink
+                to="/myDoctorAppointments"
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
+                My Appointments
+              </NavLink>
+            </li>
+          )}
 
           <li className="mt-2 mb-2 md:mt-0 md:mb-0">
             <button
@@ -112,4 +130,3 @@ const LoggedInHeader = () => {
 };
 
 export default LoggedInHeader;
-
