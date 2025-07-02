@@ -29,6 +29,7 @@ import { useNavigate } from "react-router";
 
 const AdminDoctorCreatePage = () => {
   const { step, nextStep, prevStep } = useStepper(2);
+  
 
   const [specializations, setSpecializations] = useState<specializationType[]>(
     []
