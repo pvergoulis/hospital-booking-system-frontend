@@ -15,7 +15,10 @@ import { toast } from "react-toastify";
 import { useStepper } from "../../../hooks/useStepper";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createDoctorSchema, type doctorCreateType } from "../../../types/doctorTypes";
+import {
+  createDoctorSchema,
+  type doctorCreateType,
+} from "../../../types/doctorTypes";
 import { type specializationType } from "../../../services/specializationApi";
 import { type clinicType } from "../../../services/clinicsApi";
 import { getAllSpecialization } from "../../../services/specializationApi";
@@ -32,7 +35,7 @@ const AdminDoctorCreatePage = () => {
   );
   const [clinics, setClinics] = useState<clinicType[]>([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Parvathy Hospital | Create Doctor Page";
@@ -57,7 +60,7 @@ const AdminDoctorCreatePage = () => {
     watch,
     control,
     formState: { errors, touchedFields },
-  } = useForm<doctorCreateType >({
+  } = useForm<doctorCreateType>({
     resolver: zodResolver(createDoctorSchema),
     mode: "onChange",
     defaultValues: {
@@ -65,31 +68,35 @@ const AdminDoctorCreatePage = () => {
       clinic: { _id: "", name: "" },
     },
   });
-  
 
   const watchFields = watch();
   const { isDisabledStepOne, isDisabledStepTwo, isDisabledStepThree } =
     useDoctorStepValidation(watchFields);
 
-    const onSubmit = async (data: doctorCreateType ) => {
-      console.log("Submitted data", data);
-      try {
-        await createDoctor(data);
-         toast.success("Doctor registered successfully!");
- 
-        console.log("Doctor registered successfully:");
-        setTimeout(()=>{
-          navigate("/doctor-admin")
-        },2000)
-      } catch (error) {
-        console.log("Error in creating new doctor", error);
-        toast.error("Failed to create doctor. Please try again.");
-      }
-    };
+  const onSubmit = async (data: doctorCreateType) => {
+    console.log("Submitted data", data);
+
+    const payload = ({
+      ...data,
+      specialization: data.specialization._id,
+      clinic: data.clinic._id,
+    }as any);
+    try {
+      await createDoctor(payload);
+      toast.success("Doctor registered successfully!");
+
+      console.log("Doctor registered successfully:");
+      setTimeout(() => {
+        navigate("/doctor-admin");
+      }, 2000);
+    } catch (error) {
+      console.log("Error in creating new doctor", error);
+      toast.error("Failed to create doctor. Please try again.");
+    }
+  };
 
   return (
     <>
-      
       <Container className="mt-16 border-3 border-blue-400 rounded-xl space-y-7 pb-6  mb-6 min-h-[55vh]">
         <StepperWizzard step={step} />
         <Typography
@@ -209,7 +216,6 @@ const AdminDoctorCreatePage = () => {
           {step === 2 && (
             <div className="space-y-4">
               {/* Specialization Select */}
-            
               <Controller
                 name="specialization._id"
                 control={control}
@@ -245,7 +251,6 @@ const AdminDoctorCreatePage = () => {
               />
 
               {/* Clinic Select */}
-            
               <Controller
                 name="clinic._id"
                 control={control}
@@ -264,7 +269,7 @@ const AdminDoctorCreatePage = () => {
                       {...field}
                     >
                       {clinics.map((clinic) => (
-                        <MenuItem key={clinic._id } value={clinic._id}>
+                        <MenuItem key={clinic._id} value={clinic._id}>
                           {clinic.name}
                         </MenuItem>
                       ))}
@@ -276,6 +281,55 @@ const AdminDoctorCreatePage = () => {
                     )}
                   </FormControl>
                 )}
+              />
+
+              {/* Email */}
+              <TextField
+                placeholder="Email"
+                fullWidth
+                required
+                id="email"
+                label="Email"
+                {...register("email")}
+                sx={{ mb: 2 }}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                FormHelperTextProps={{
+                  sx: { color: "#d32f2f", fontWeight: "bold" },
+                }}
+              />
+
+              {/* Username */}
+              <TextField
+                placeholder="Username"
+                fullWidth
+                required
+                id="username"
+                label="Username"
+                {...register("username")}
+                sx={{ mb: 2 }}
+                error={!!errors.username}
+                helperText={errors.username?.message}
+                FormHelperTextProps={{
+                  sx: { color: "#d32f2f", fontWeight: "bold" },
+                }}
+              />
+
+              {/* Password */}
+              <TextField
+                placeholder="Password"
+                fullWidth
+                required
+                id="password"
+                type="password"
+                label="Password"
+                {...register("password")}
+                sx={{ mb: 2 }}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                FormHelperTextProps={{
+                  sx: { color: "#d32f2f", fontWeight: "bold" },
+                }}
               />
             </div>
           )}

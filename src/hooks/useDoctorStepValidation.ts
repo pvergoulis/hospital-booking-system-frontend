@@ -18,9 +18,13 @@ export const useDoctorStepValidation = (watchedValues: doctorCreateType ) => {
     cv: watchedValues.cv ?? "",
   });
 
+
   const isDisabledStepThree = isStepThreeDisabled({
     specialization: watchedValues.specialization ?? { _id: "", name: "" },
     clinic: watchedValues.clinic ?? { _id: "", name: "" },
+    email: watchedValues.email ?? "",
+    username: watchedValues.username ?? "",
+    password: watchedValues.password ?? "",
   });
 
   return {

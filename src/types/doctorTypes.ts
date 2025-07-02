@@ -48,6 +48,9 @@ export const createDoctorSchema = z.object({
     .nonempty("Lastname is required")
     .min(3, "Must be atleast 3 characters"),
   image: z.string().nonempty("Image URL is required"),
+  email: z.string().email().nonempty("Email is required"),
+  username: z.string().min(4,"Username must be at least 4 characters").nonempty("Username is required"),
+  password: z.string().min(4,"Password must be at least 4 characters"),
   experience: z.string().nonempty("Experience is required"),
   cv: z.string().min(50, "CV must be at least 50 characters"),
   specialization: z.object({
