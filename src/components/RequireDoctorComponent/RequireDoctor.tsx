@@ -2,7 +2,7 @@ import { Navigate } from "react-router";
 import { jwtDecode } from "jwt-decode";
 import { type DecodedToken } from "../../types/jwtTypes";
 
-const RequireAdmin = ({ children }: { children: React.ReactNode }) => {
+const RequireDoctor = ({ children }: { children: React.ReactNode }) => {
   
   const token = localStorage.getItem("token");
 
@@ -26,4 +26,4 @@ const RequireAdmin = ({ children }: { children: React.ReactNode }) => {
   return children;
 };
 
-export default RequireAdmin;
+export default RequireDoctor;

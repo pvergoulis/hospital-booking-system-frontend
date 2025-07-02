@@ -25,6 +25,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DoctorAppointmentsPage from "./pages/DoctorAppointmentsPage";
+import RequireDoctor from "./components/RequireDoctorComponent/RequireDoctor";
 
 function App() {
   return (
@@ -87,9 +88,9 @@ function App() {
                 <Route
                 path="/myDoctorAppointments"
                 element={
-                  <RequireAuth>
+                  <RequireDoctor>
                     <DoctorAppointmentsPage />
-                  </RequireAuth>
+                  </RequireDoctor>
                 }
               />
 
