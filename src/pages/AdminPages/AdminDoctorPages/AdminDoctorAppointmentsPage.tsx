@@ -109,7 +109,7 @@ const AdminDoctorAppointmentsPage = () => {
   const docLastname = doctor?.lastname ?? "";
 
   return (
-    <Box sx={{ padding: "3rem", height: "60vh" }}>
+    <Box sx={{ padding: "3rem" }}>
       <Typography
         variant="h5"
         gutterBottom
