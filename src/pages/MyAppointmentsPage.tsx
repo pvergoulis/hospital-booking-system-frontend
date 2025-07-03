@@ -149,6 +149,12 @@ const MyAppointmentsPage = () => {
                       ? "text-red-500"
                       : appt.status === "CONFIRMED"
                       ? "text-green-600"
+                      : appt.status === "DONE"
+                      ? "text-purple-600"
+                      : appt.status === "ACCEPTED"
+                      ? "text-blue-500"
+                      : appt.status === "REJECTED"
+                      ? "text-gray-500"
                       : "text-yellow-500"
                   }`}
                 >
@@ -156,7 +162,6 @@ const MyAppointmentsPage = () => {
                 </p>
               </div>
 
-            
               <Button
                 variant="contained"
                 color="error"
