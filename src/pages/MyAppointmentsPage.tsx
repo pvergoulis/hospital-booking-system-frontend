@@ -112,7 +112,7 @@ const MyAppointmentsPage = () => {
       </Typography>
 
       {appointments.length === 0 ? (
-        <Typography variant="body1">You have no appointments.</Typography>
+        <Typography variant="body1" className="text-center text-red-600">You have no appointments.</Typography>
       ) : (
         <div className="space-y-6">
           {appointments.map((appt) => (
