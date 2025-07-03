@@ -87,7 +87,7 @@ const LoggedInHeader = () => {
                 onClick={handleToggle}
                 className={({ isActive }) =>
                   isActive
-                    ? "underline underline-offset-4 text-white font-bold"
+                    ? "underline underline-offset-6 text-white font-bold"
                     : "text-white"
                 }
               >
