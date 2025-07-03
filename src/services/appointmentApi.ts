@@ -17,7 +17,7 @@ export const bookAppointment = async (data: AppointmentRequest) => {
       Authorization: `Bearer ${token}`,
     },
   });
-
+  console.log('Hey')
   return res.data;
 };
 
