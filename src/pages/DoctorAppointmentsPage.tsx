@@ -31,6 +31,7 @@ import { type AppointmentDoctorType } from "../types/appointmentTypes";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import { el } from "date-fns/locale/el";
+import { useAppointmentColor } from "../hooks/useApponetmentColor";
 
 const locales = {
   el: el,
@@ -80,7 +81,7 @@ const DoctorAppointmentsPage = () => {
           }))
         );
       } catch (err: any) {
-        setError(err.message || "Αποτυχία φόρτωσης ραντεβού");
+        setError(err.message || "Failed loading appointments");
       } finally {
         setLoading(false);
       }
@@ -129,6 +130,9 @@ const DoctorAppointmentsPage = () => {
       console.error("Failed to update status:", err);
     }
   };
+
+  const { eventStyleGetter } = useAppointmentColor();
+
   console.log("raw date from db:", selectedAppointment?.date);
   return (
     <Box sx={{ padding: "3rem" }}>
@@ -161,6 +165,7 @@ const DoctorAppointmentsPage = () => {
           onNavigate={handleNavigate}
           onSelectEvent={handleSelectEvent}
           popup
+          eventPropGetter={eventStyleGetter}
         />
       )}
 
@@ -188,7 +193,7 @@ const DoctorAppointmentsPage = () => {
             <Select
               labelId="status-label"
               value={selectedAppointment?.status ?? ""}
-              label="Κατάσταση"
+              label="Status"
               onChange={(e) => {
                 if (selectedAppointment) {
                   setSelectedAppointment({
