@@ -4,6 +4,7 @@ import { getAllDoctors } from "../services/doctorApi";
 import { type doctorTypeCard } from "../types/doctorTypes";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 const DoctorPage = () => {
   const [doctors, setDoctors] = useState<doctorTypeCard[]>([]);
@@ -14,6 +15,7 @@ const DoctorPage = () => {
   });
 
   const navigate = useNavigate();
+  const {role}  = useAuth();
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -60,23 +62,27 @@ const DoctorPage = () => {
       sortComparator: (v1, v2) =>
         (v1?.name || "").toLowerCase().localeCompare((v2?.name || "").toLowerCase()),
     },
-    {
-      field: "action",
-      headerName: "Book",
-      flex: 0.5,
-      sortable: false,
-      renderCell: (params) => (
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={() => navigate(`/doctors/${params.row.lastname}`)}
-        >
-          Book
-        </Button>
-      ),
-    },
   ];
+
+  if (role !== "DOCTOR") {
+  columns.push({
+    field: "action",
+    headerName: "Book",
+    flex: 0.5,
+    sortable: false,
+    renderCell: (params) => (
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        onClick={() => navigate(`/doctors/${params.row.lastname}`)}
+      >
+        Book
+      </Button>
+    ),
+  });
+}
+  
 
   return (
     <Box sx={{ padding: "4rem", minHeight: "60vh" }}>
@@ -88,12 +94,16 @@ const DoctorPage = () => {
         >
           Doctor's List
         </Typography>
-        <Typography
+
+        {role != "DOCTOR" && (
+            <Typography
           sx={{ fontSize: "1.2rem", fontWeight: "bold" }}
           className="text-cyan-500"
         >
           Click on the book button to make an appointment
         </Typography>
+        )}
+        
       </div>
 
       <TextField

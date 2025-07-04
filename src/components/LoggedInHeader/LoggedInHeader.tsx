@@ -67,7 +67,7 @@ const LoggedInHeader = () => {
             </NavLink>
           </li>
 
-             {role === "DOCTOR" && (
+          {role === "DOCTOR" && (
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink
                 to={`/myPatients`}
@@ -82,7 +82,6 @@ const LoggedInHeader = () => {
               </NavLink>
             </li>
           )}
-
 
           <li className="mt-2 mb-2 md:mt-0 md:mb-0">
             <NavLink
@@ -114,7 +113,7 @@ const LoggedInHeader = () => {
             </li>
           )}
 
-           {role === "DOCTOR" && (
+          {role === "DOCTOR" && (
             <li className="mt-2 mb-2 md:mt-0 md:mb-0">
               <NavLink
                 to="/myDoctorAppointments"
