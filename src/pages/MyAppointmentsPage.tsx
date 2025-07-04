@@ -8,7 +8,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Avatar,
+  TextField,
 } from "@mui/material";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import {
   getUserAppointments,
   cancelAppointment,
@@ -32,23 +35,14 @@ const MyAppointmentsPage = () => {
   const [appointmentToCancel, setAppointmentToCancel] = useState<string | null>(
     null
   );
+  const [searchDoctor, setSearchDoctor] = useState("");
 
   const updateStatuses = (appointments: AppointmentType[]) => {
     const now = new Date();
-    console.log("Now:", now.toISOString());
-
     return appointments.map((appt) => {
       if (appt.status === "PENDING") {
         const apptDateTime = parseAppointmentDateTime(appt.date, appt.timeSlot);
-        console.log(
-          `Appointment ${appt._id} datetime:`,
-          apptDateTime.toISOString()
-        );
-
         if (apptDateTime <= now) {
-          console.log(
-            `Updating appointment ${appt._id} status from PENDING to CONFIRMED`
-          );
           return { ...appt, status: "CONFIRMED" };
         }
       }
@@ -60,9 +54,7 @@ const MyAppointmentsPage = () => {
     const fetchAndUpdateAppointments = async () => {
       try {
         await updatePastPendingAppointments();
-
         const data = await getUserAppointments();
-
         const updatedAppointments = updateStatuses(data);
         setAppointments(updatedAppointments);
         setError(null);
@@ -102,79 +94,154 @@ const MyAppointmentsPage = () => {
     }
   };
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "CANCELED":
+        return "red";
+      case "CONFIRMED":
+        return "green";
+      case "DONE":
+        return "purple";
+      case "ACCEPTED":
+        return "blue";
+      case "REJECTED":
+        return "gray";
+      case "PENDING":
+      default:
+        return "orange";
+    }
+  };
+
+  const columns: GridColDef[] = [
+    {
+      field: "doctor",
+      headerName: "Doctor",
+      flex: 2,
+      sortable: true,
+      sortComparator: (a, b) => {
+        // a, b είναι τα doctor objects
+        const nameA = a && typeof a === "object" ? `${a.firstname} ${a.lastname}`.toLowerCase() : "";
+        const nameB = b && typeof b === "object" ? `${b.firstname} ${b.lastname}`.toLowerCase() : "";
+        return nameA.localeCompare(nameB);
+      },
+      renderCell: (params) => {
+        const doctor = params.value;
+        if (!doctor) return <span className="text-red-500">Unknown</span>;
+        return (
+          <div className="flex items-center gap-2">
+            <Avatar src={doctor.image} alt={doctor.firstname} />
+            <span>
+              Dr. {doctor.firstname} {doctor.lastname}
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      field: "specialization",
+      headerName: "Specialization",
+      sortable: true,
+      flex: 1,
+      renderCell: (params: any) => {
+        const doctor = params.row.doctor;
+        if (!doctor) return "—";
+        return typeof doctor.specialization === "object"
+          ? doctor.specialization.name
+          : doctor.specialization;
+      },
+    },
+    {
+      field: "date",
+      headerName: "Date",
+      flex: 0.8,
+      renderCell: (params: any) => {
+        const dateValue = params.row.date;
+        if (!dateValue) return "—";
+        const dateObj = new Date(dateValue);
+        return isNaN(dateObj.getTime()) ? "—" : dateObj.toLocaleDateString();
+      },
+    },
+    {
+      field: "timeSlot",
+      headerName: "Time",
+      flex: 0.5,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 0.8,
+      renderCell: (params) => (
+        <span
+          style={{ color: getStatusColor(params.value), fontWeight: "bold" }}
+        >
+          {params.value}
+        </span>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 0.7,
+      renderCell: (params) => {
+        const appt = params.row;
+        if (["PENDING", "CONFIRMED"].includes(appt.status)) {
+          return (
+            <Button
+              variant="contained"
+              color="error"
+              size="small"
+              onClick={() => openCancelDialog(appt._id)}
+            >
+              Cancel
+            </Button>
+          );
+        }
+        return null;
+      },
+    },
+  ];
+
+  // Filter appointments by doctor name
+  const filteredAppointments = appointments.filter((appt) => {
+    if (!searchDoctor.trim()) return true;
+    const doctor = appt.doctor;
+    if (!doctor) return false;
+    const fullName = `${doctor.firstname} ${doctor.lastname}`.toLowerCase();
+    return fullName.includes(searchDoctor.trim().toLowerCase());
+  });
+
   if (loading) return <CircularProgress />;
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-4 min-h-[55vh]">
-      <Typography variant="h4" className="mb-4 text-center text-sky-700 ">
+    <div className="max-w-6xl mx-auto mt-10 p-4 min-h-[55vh]">
+      <Typography variant="h4" className="mb-6 text-center text-sky-700">
         My Appointments
       </Typography>
-
+      <div className="mb-4 flex justify-end">
+        <TextField
+          label="Search by Doctor Name"
+          variant="outlined"
+          fullWidth
+          value={searchDoctor}
+          onChange={(e) => setSearchDoctor(e.target.value)}
+        />
+      </div>
       {appointments.length === 0 ? (
         <Typography variant="body1" className="text-center text-red-600">
           You have no appointments.
         </Typography>
       ) : (
-        <div className="space-y-6">
-          {appointments.map((appt) => (
-            <div
-              key={appt._id}
-              className="border-2 border-cyan-500 rounded-xl p-4 flex flex-col md:flex-row justify-between items-center"
-            >
-              <div className="flex items-center space-x-4">
-                {appt.doctor.image && (
-                  <img
-                    src={appt.doctor.image}
-                    alt={appt.doctor.firstname}
-                    className="w-20 h-20 rounded-full object-cover"
-                  />
-                )}
-                <div>
-                  <p className="font-semibold text-lg text-sky-600">
-                    Dr. {appt.doctor.firstname} {appt.doctor.lastname}
-                  </p>
-                  <p className="text-gray-500">
-                    {appt.doctor.specialization.name}
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center md:text-right mt-4 md:mt-0">
-                <p className="text-sm text-gray-700">
-                  Date: {new Date(appt.date).toLocaleDateString()}
-                </p>
-                <p className="text-sm text-gray-700">Time: {appt.timeSlot}</p>
-                <p
-                  className={`text-sm font-semibold ${
-                    appt.status === "CANCELED"
-                      ? "text-red-500"
-                      : appt.status === "CONFIRMED"
-                      ? "text-green-600"
-                      : appt.status === "DONE"
-                      ? "text-purple-600"
-                      : appt.status === "ACCEPTED"
-                      ? "text-blue-500"
-                      : appt.status === "REJECTED"
-                      ? "text-gray-500"
-                      : "text-yellow-500"
-                  }`}
-                >
-                  Status: {appt.status}
-                </p>
-              </div>
-
-              {(appt.status === "PENDING" || appt.status === "CONFIRMED") && (
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => openCancelDialog(appt._id)}
-                >
-                  Cancel
-                </Button>
-              )}
-            </div>
-          ))}
+        <div style={{ height: 600, width: "100%" }}>
+          <DataGrid
+            rows={filteredAppointments}
+            columns={columns}
+            getRowId={(row) => row._id}
+            pageSizeOptions={[5, 10, 20]}
+            initialState={{
+              pagination: { paginationModel: { pageSize: 10, page: 0 } },
+            }}
+          />
         </div>
       )}
 
