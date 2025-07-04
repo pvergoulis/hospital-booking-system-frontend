@@ -94,9 +94,9 @@ const DoctorAppointmentsPage = () => {
     id: appt._id,
     title: `${appt.user?.firstname ?? ""} ${appt.user?.lastname ?? ""} - ${
       appt.status
-    }`,
+    } - ${appt.timeSlot ?? ""}`,
     start: new Date(appt.date),
-    end: new Date(moment(appt.date).add(30, "minutes").toISOString()),
+    end: new Date(moment(appt.date).add(60, "minutes").toISOString()),
     resource: appt,
   }));
 
