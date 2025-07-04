@@ -119,7 +119,6 @@ const MyAppointmentsPage = () => {
       flex: 2,
       sortable: true,
       sortComparator: (a, b) => {
-        // a, b είναι τα doctor objects
         const nameA = a && typeof a === "object" ? `${a.firstname} ${a.lastname}`.toLowerCase() : "";
         const nameB = b && typeof b === "object" ? `${b.firstname} ${b.lastname}`.toLowerCase() : "";
         return nameA.localeCompare(nameB);
@@ -201,7 +200,7 @@ const MyAppointmentsPage = () => {
     },
   ];
 
-  // Filter appointments by doctor name
+  
   const filteredAppointments = appointments.filter((appt) => {
     if (!searchDoctor.trim()) return true;
     const doctor = appt.doctor;
