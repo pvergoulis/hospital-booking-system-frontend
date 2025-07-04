@@ -21,7 +21,7 @@ import {
 } from "../../../services/doctorApi";
 import { getAllSpecialization } from "../../../services/specializationApi";
 import { getAllClinics } from "../../../services/clinicsApi";
-import { doctorSchema, type doctorType } from "../../../types/doctorTypes";
+import { doctorUpdateSchema, type doctorUpdateType } from "../../../types/doctorTypes";
 import { type specializationType } from "../../../services/specializationApi";
 import { type clinicType } from "../../../services/clinicsApi";
 import { toast } from "react-toastify";
@@ -42,8 +42,8 @@ const AdminDoctorEditPage = () => {
     control,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<doctorType>({
-    resolver: zodResolver(doctorSchema),
+  } = useForm<doctorUpdateType>({
+    resolver: zodResolver(doctorUpdateSchema),
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const AdminDoctorEditPage = () => {
         setValue("amka", doctor.amka || "");
         setValue("specialization", doctor.specialization);
         setValue("clinic", doctor.clinic);
-        setValue("availableHours", doctor.availableHours || []);
+        
 
         const [specializationsData, clinicsData] = await Promise.all([
           getAllSpecialization(),
@@ -78,7 +78,7 @@ const AdminDoctorEditPage = () => {
   }, [lastname, setValue]);
 
 
-  const onSubmit = async (data: doctorType) => {
+  const onSubmit = async (data: doctorUpdateType) => {
     console.log("Submitted data :", data);
     try {
       const payload = {
@@ -109,7 +109,7 @@ const AdminDoctorEditPage = () => {
       </Box>
     );
   }
-
+  
   return (
     <Container maxWidth="sm" sx={{ marginTop: "4rem", marginBottom: "4rem" }}>
       <Typography
@@ -130,9 +130,7 @@ const AdminDoctorEditPage = () => {
           {...register("firstname")}
           error={!!errors.firstname}
           helperText={errors.firstname?.message}
-          FormHelperTextProps={{
-            sx: { color: "#d32f2f", fontWeight: "bold" },
-          }}
+          FormHelperTextProps={{ sx: { color: "#d32f2f", fontWeight: "bold" } }}
         />
         <TextField
           label="Last Name"
@@ -141,12 +139,8 @@ const AdminDoctorEditPage = () => {
           {...register("lastname")}
           error={!!errors.lastname}
           helperText={errors.lastname?.message}
-           FormHelperTextProps={{
-            sx: { color: "#d32f2f", fontWeight: "bold" },
-          }}
+          FormHelperTextProps={{ sx: { color: "#d32f2f", fontWeight: "bold" } }}
         />
-
-        {/* AMKA */}
         <TextField
           label="AMKA"
           fullWidth
@@ -154,9 +148,7 @@ const AdminDoctorEditPage = () => {
           {...register("amka")}
           error={!!errors.amka}
           helperText={errors.amka?.message}
-           FormHelperTextProps={{
-            sx: { color: "#d32f2f", fontWeight: "bold" },
-          }}
+          FormHelperTextProps={{ sx: { color: "#d32f2f", fontWeight: "bold" } }}
         />
 
         {/* Specialization Select */}
@@ -187,9 +179,7 @@ const AdminDoctorEditPage = () => {
             )}
           />
           <FormHelperText>
-            {errors.specialization?.message ||
-              errors.specialization?.name?.message}
-              
+            {errors.specialization?.message || errors.specialization?.name?.message}
           </FormHelperText>
         </FormControl>
 
@@ -230,6 +220,9 @@ const AdminDoctorEditPage = () => {
           fullWidth
           margin="normal"
           {...register("experience")}
+          error={!!errors.experience}
+          helperText={errors.experience?.message}
+          FormHelperTextProps={{ sx: { color: "#d32f2f", fontWeight: "bold" } }}
         />
 
         <TextField
@@ -239,6 +232,9 @@ const AdminDoctorEditPage = () => {
           rows={4}
           margin="normal"
           {...register("cv")}
+          error={!!errors.cv}
+          helperText={errors.cv?.message}
+          FormHelperTextProps={{ sx: { color: "#d32f2f", fontWeight: "bold" } }}
         />
 
         <TextField
@@ -246,6 +242,9 @@ const AdminDoctorEditPage = () => {
           fullWidth
           margin="normal"
           {...register("image")}
+          error={!!errors.image}
+          helperText={errors.image?.message}
+          FormHelperTextProps={{ sx: { color: "#d32f2f", fontWeight: "bold" } }}
         />
 
         <Box mt={3}>
