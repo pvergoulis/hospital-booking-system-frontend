@@ -26,13 +26,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DoctorAppointmentsPage from "./pages/DoctorAppointmentsPage";
 import RequireDoctor from "./components/RequireDoctorComponent/RequireDoctor";
-
+import MyPatientsPage from "./pages/MyPatientsPage";
 function App() {
   return (
     <>
       <AuthProvider>
         <BrowserRouter>
-        <ToastContainer position="top-right" autoClose={3000} />
+          <ToastContainer position="top-right" autoClose={3000} />
           <Routes>
             {/*  Public Routes */}
             <Route element={<BeforeLoginLayout />}>
@@ -84,8 +84,17 @@ function App() {
                 }
               />
 
+              {/*  Doctor Protected Routes */}
+              <Route
+                path="/myPatients"
+                element={
+                  <RequireDoctor>
+                    <MyPatientsPage />
+                  </RequireDoctor>
+                }
+              />
 
-                <Route
+              <Route
                 path="/myDoctorAppointments"
                 element={
                   <RequireDoctor>

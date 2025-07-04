@@ -88,7 +88,6 @@ const DoctorPage = () => {
         >
           Doctor's List
         </Typography>
-
         <Typography
           sx={{ fontSize: "1.2rem", fontWeight: "bold" }}
           className="text-cyan-500"

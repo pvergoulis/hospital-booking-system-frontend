@@ -8,6 +8,7 @@ const LoggedInHeader = () => {
   const navigate = useNavigate();
   const { role, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const { userId } = useAuth();
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -65,6 +66,23 @@ const LoggedInHeader = () => {
               About
             </NavLink>
           </li>
+
+             {role === "DOCTOR" && (
+            <li className="mt-2 mb-2 md:mt-0 md:mb-0">
+              <NavLink
+                to={`/myPatients`}
+                onClick={handleToggle}
+                className={({ isActive }) =>
+                  isActive
+                    ? "underline underline-offset-4 text-white font-bold"
+                    : "text-white"
+                }
+              >
+                Patients
+              </NavLink>
+            </li>
+          )}
+
 
           <li className="mt-2 mb-2 md:mt-0 md:mb-0">
             <NavLink
