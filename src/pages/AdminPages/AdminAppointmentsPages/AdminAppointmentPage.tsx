@@ -48,7 +48,17 @@ const AdminAppointmentPage = () => {
 
   const columns: GridColDef[] = [
     { field: "_id", headerName: "ID", flex: 1 },
-    { field: "date", headerName: "Date", flex: 1 },
+    {
+      field: "date",
+      headerName: "Date",
+      flex: 1,
+      renderCell: (params: any) => {
+        const dateValue = params.row.date;
+        if (!dateValue) return "—";
+        const dateObj = new Date(dateValue);
+        return isNaN(dateObj.getTime()) ? "—" : dateObj.toLocaleDateString();
+      },
+    },
     { field: "timeSlot", headerName: "Time Slot", flex: 1 },
     { field: "status", headerName: "Status", flex: 1 },
 
@@ -63,8 +73,8 @@ const AdminAppointmentPage = () => {
           rows={appointments}
           columns={columns}
           getRowId={(row) => row._id}
-          paginationModel={paginationModel} 
-          onPaginationModelChange={(newModel) => setPaginationModel(newModel)} 
+          paginationModel={paginationModel}
+          onPaginationModelChange={(newModel) => setPaginationModel(newModel)}
           pageSizeOptions={[5, 8, 10, 20]}
           pagination
         />
