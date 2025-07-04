@@ -8,7 +8,7 @@ const LoggedInHeader = () => {
   const navigate = useNavigate();
   const { role, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const { userId } = useAuth();
+
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
