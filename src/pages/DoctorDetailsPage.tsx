@@ -63,8 +63,10 @@ const DoctorDetailsPage = () => {
         date,
         timeSlot,
       });
-      
-      toast.success(`Appointment with doctor ${doctor.firstname} - ${doctor.lastname} booked successfully!`)
+
+      toast.success(
+        `Appointment with doctor ${doctor.firstname} - ${doctor.lastname} booked successfully!`
+      );
       setDate("");
       setTimeSlot("");
 
@@ -72,7 +74,9 @@ const DoctorDetailsPage = () => {
       setBookedSlots((prev) => [...prev, { date, timeSlot }]);
     } catch (err) {
       console.error("Booking failed", err);
-      toast.error('Erroing in booking an appointment')
+      toast.error(
+        "This time slot is already booked for this doctor. Error in booking an appointment"
+      );
       setError(err instanceof Error ? err.message : "Booking failed");
     }
   };
@@ -152,8 +156,11 @@ const DoctorDetailsPage = () => {
           Confirm Appointment
         </button>
 
-        
-        {error && <p className="text-red-600 text-center">{error}</p>}
+        {error && (
+          <p className="text-red-600 text-center">
+            This time slot is already booked for this doctor.
+          </p>
+        )}
       </div>
     </div>
   );
