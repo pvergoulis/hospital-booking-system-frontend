@@ -4,13 +4,15 @@ import { TextField } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { getAppointmentsByDoctor } from "../services/appointmentApi";
 
-
 const MyPatientsPage = () => {
-  const { userId } = useAuth(); 
+  const { userId } = useAuth();
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 });
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
 
   useEffect(() => {
     document.title = "Parvathy Hospital | My Patients Page";
@@ -44,12 +46,21 @@ const MyPatientsPage = () => {
       headerName: "Patient",
       flex: 1,
     },
-    { field: "date", headerName: "Date", flex: 1 },
+    {
+      field: "date",
+      headerName: "Date",
+      flex: 1,
+      renderCell: (params: any) => {
+        const dateValue = params.row.date;
+        if (!dateValue) return "—";
+        const dateObj = new Date(dateValue);
+        return isNaN(dateObj.getTime()) ? "—" : dateObj.toLocaleDateString();
+      },
+    },
     { field: "timeSlot", headerName: "Time", flex: 1 },
     { field: "status", headerName: "Status", flex: 1 },
   ];
 
-  
   const filteredAppointments = appointments.filter((appt: any) =>
     appt.userFullName.toLowerCase().includes(search.toLowerCase())
   );
@@ -70,7 +81,7 @@ const MyPatientsPage = () => {
         columns={columns}
         getRowId={(row) => row._id}
         loading={loading}
-        pageSizeOptions={[5,10,25]}
+        pageSizeOptions={[5, 10, 25]}
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
       />
