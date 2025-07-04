@@ -56,7 +56,7 @@ const MyPatientsPage = () => {
 
   return (
     <div className="p-4 mt-16 text-center text-blue-500 w-full min-h-[50vh]">
-      <h1 className="text-2xl font-bold mb-4">My Patients Page</h1>
+      <h1 className="text-2xl font-bold mb-4">My Patients </h1>
       <TextField
         label="Patient search"
         variant="outlined"
