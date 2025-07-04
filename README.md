@@ -1,6 +1,6 @@
 # React + TypeScript + Vite
 
-# 🏥 Hospital Management System
+# 🏥 Hospital Booking System
 A modern hospital management web application built with React, TailwindCSS, and Material UI — featuring full authentication & role-based authorization. This system allows users to register, log in, manage appointments, and for administrators to take full control over data with advanced CRUD functionality.
 
 
