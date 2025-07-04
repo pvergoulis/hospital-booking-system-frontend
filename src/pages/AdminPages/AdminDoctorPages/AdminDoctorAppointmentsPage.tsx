@@ -1,29 +1,17 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { useParams } from "react-router";
 import {
   Box,
   Typography,
   CircularProgress,
   Alert,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import {
   getAppointmentsByDoctor,
-  updateAppointmentStatus,
 } from "../../../services/appointmentApi";
 import { type AppointmentDoctorType } from "../../../types/appointmentTypes";
 
-const statusOptions = [
-  "PENDING",
-  "CONFIRMED",
-  "CANCELED",
-  "REJECTED",
-  "ACCEPTED",
-  "DONE",
-];
 
 const AdminDoctorAppointmentsPage = () => {
   const { doctorId } = useParams();
@@ -60,21 +48,6 @@ const AdminDoctorAppointmentsPage = () => {
     fetchAppointments();
   }, [doctorId]);
 
-  const handleStatusChange = async (id: string, newStatus: string) => {
-    try {
-      const updated = await updateAppointmentStatus(id, newStatus);
-      setAppointments((prev) =>
-        prev.map((appt) =>
-          appt._id === id ? { ...appt, status: updated.status } : appt
-        )
-      );
-      toast.success(`Status updated to ${updated.status}`);
-    } catch (err) {
-      console.error("Failed to update status:", err);
-       toast.error("Failed to update appointment status");
-    }
-  };
-
   const columns: GridColDef[] = [
     { field: "_id", headerName: "ID", flex: 1 },
     { field: "doctorName", headerName: "Doctor", flex: 1 },
@@ -84,22 +57,6 @@ const AdminDoctorAppointmentsPage = () => {
       field: "status",
       headerName: "Status",
       flex: 1,
-      renderCell: (params) => (
-        <Select
-          value={params.row.status}
-          onChange={(e) =>
-            handleStatusChange(params.row._id, e.target.value as string)
-          }
-          size="small"
-          fullWidth
-        >
-          {statusOptions.map((status) => (
-            <MenuItem key={status} value={status}>
-              {status}
-            </MenuItem>
-          ))}
-        </Select>
-      ),
     },
     { field: "patientName", headerName: "Patient", flex: 1 },
   ];
@@ -146,4 +103,3 @@ const AdminDoctorAppointmentsPage = () => {
 };
 
 export default AdminDoctorAppointmentsPage;
-
