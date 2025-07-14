@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import DoctorCard from "../components/DoctorCard/DoctorCard";
 import { getFirstEightDoctors } from "../services/doctorApi";
 import {type doctorTypeCard } from "../types/doctorTypes";
+import { useAuth } from "../context/AuthContext";
 
 const WelcomePage = () => {
   const [username, setUsername] = useState<string | null>(null);
   const [doctors, setDoctors] = useState<doctorTypeCard[]>([]);
+  const { role } = useAuth();
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
 
@@ -41,7 +43,8 @@ const WelcomePage = () => {
             Our hospital is home to one of the{" "}
             <span className="text-cyan-600">largest hospitals in India</span>
           </p>
-          <p className="ms-16 mt-2 text-xl text-center">
+          {role !== "DOCTOR" && (
+            <p className="ms-16 mt-2 text-xl text-center">
             Find the doctor that you need and book an appointment
             <NavLink
               to="/doctors"
@@ -50,6 +53,8 @@ const WelcomePage = () => {
               Book
             </NavLink>
           </p>
+          )}
+          
         </div>
         <div className="flex-1/3 bg-[#41B6E6] p-6">
           <img

@@ -27,6 +27,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DoctorAppointmentsPage from "./pages/DoctorAppointmentsPage";
 import RequireDoctor from "./components/RequireDoctorComponent/RequireDoctor";
 import MyPatientsPage from "./pages/MyPatientsPage";
+import NotDoctorRequire from "./components/RequireDoctorComponent/NotDoctorRequire";
 function App() {
   return (
     <>
@@ -62,9 +63,9 @@ function App() {
               <Route
                 path="/doctors/:lastname"
                 element={
-                  <RequireAuth>
+                  <NotDoctorRequire>
                     <DoctorDetailsPage />
-                  </RequireAuth>
+                  </NotDoctorRequire>
                 }
               />
               <Route
